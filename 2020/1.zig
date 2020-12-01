@@ -1,8 +1,8 @@
 usingnamespace @import("common.zig");
 
 pub fn run(input: Input) anyerror!Output {
-    var timer = try Timer.start();
-    var time: u64 = 0;
+    // var timer = try Timer.start();
+    // var time: u64 = 0;
 
     var expenses = newVec(u32);
     try expenses.ensureCapacity(200);
@@ -13,9 +13,9 @@ pub fn run(input: Input) anyerror!Output {
         try expenses.append(try std.fmt.parseInt(u32, line, 10));
     }
     
-    time = timer.lap();
-    try print(">>> Time: {} ns\n", .{time});
-    time = timer.lap();
+    // time = timer.lap();
+    // try print(">>> Time: {} ns\n", .{time});
+    // time = timer.lap();
 
     var part1: i64 = undefined;
     outer: for (expenses.items) |exp1| {
@@ -28,9 +28,9 @@ pub fn run(input: Input) anyerror!Output {
         }
     }
 
-    time = timer.lap();
-    try print(">>> Time: {} ns\n", .{time});
-    time = timer.lap();
+    // time = timer.lap();
+    // try print(">>> Time: {} ns\n", .{time});
+    // time = timer.lap();
 
     var part2: i64 = undefined;
     outer: for (expenses.items) |exp1| {
@@ -49,8 +49,8 @@ pub fn run(input: Input) anyerror!Output {
         }
     }
 
-    time = timer.lap();
-    try print(">>> Time: {} ns\n", .{time});
+    // time = timer.lap();
+    // try print(">>> Time: {} ns\n", .{time});
 
     return Output{.part1 = part1, .part2 = part2};
 }

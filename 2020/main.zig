@@ -7,16 +7,27 @@ pub fn main() anyerror!void {
 
     var total_us: u64 = 0;
 
-    for (days.funcs) |f, i| {
+    for (days.strs) |str, i| {
         const input_filename = days.inputs[i];
-        const open_result  = os.open(input_filename, os.O_RDONLY, 0) catch unreachable;
-        const fstat_result = os.fstat(open_result) catch unreachable;
-        const input        = os.mmap(null, @intCast(u64, fstat_result.size),
-                                    os.PROT_READ, os.MAP_PRIVATE, open_result, 0) catch unreachable;
-                                    
+        const func = days.funcs[i];
+
+        const file = try std.fs.cwd().openFile(
+            input_filename,
+            .{ .read = true },
+        );
+        defer file.close();
+
+        var list = newVec(u8);
+        defer list.deinit();
+
+        try file.reader().readAllArrayList(&list, 16 * 1024);
+        const input = list.items;
+
         var timer = try Timer.start();
-        const result = try f(input);
+        const result = func(input) catch unreachable;
         const time = timer.lap();
-        try print("--- Day {:2} 2020 in {:10}μs Part 1: {}\tPart 2: {}\n", .{days.strs[i], time, result.part1, result.part2});
+        print("--- Day {:2} 2020 in {:10} μs Part 1: {}\tPart 2: {}\n", .{str, time / 1000, result.part1, result.part2});
+        
+        // print("Hello, {}!\n", .{"world"});
     }
 }
