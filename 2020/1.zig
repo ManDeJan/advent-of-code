@@ -1,58 +1,52 @@
 usingnamespace @import("common.zig");
 const os = std.os;
 
+// Expected: Part 1: 719796 Part 2: 144554112
+
 pub fn run(input: Input) anyerror!Output {
     // var timer = try Timer.start(); // DEBUG
     // var time: u64 = 0; // DEBUG
 
-    var expenses = newVec(u32);
-    try expenses.ensureCapacity(256);
-    defer expenses.deinit();
+    const target = 2020;
+    var set = [_]bool{false} ** 2020;
 
     var lines = mem.tokenize(input, "\n");
     while (lines.next()) |line| {
-        // try expenses.append(try std.fmt.parseInt(u32, line, 10));
-        expenses.addOneAssumeCapacity().* = try std.fmt.parseInt(u32, line, 10);
+        set[try std.fmt.parseInt(u32, line, 10)] = true;
     }
     
     // time = timer.lap(); // DEBUG
-    // print(">>> Time: {} ns\n", .{time}); // DEBUG
+    // print(">>> Parsing: {} ns\n", .{time}); // DEBUG
     // time = timer.lap(); // DEBUG
 
     var part1: i64 = undefined;
-    outer: for (expenses.items) |exp1| {
-        const target = 2020 - exp1;
-        for (expenses.items) |exp2| {
-            if (exp2 == target) {
-                part1 = exp1 * exp2;
+    for (set) | num, i | {
+        const remainder = target - i;
+        if (set[remainder] and num) {
+            part1 = @intCast(i64, i * remainder);
+            break;
+        }
+    }
+
+    // time = timer.lap(); // DEBUG
+    // print(">>> Part 1: {} ns\n", .{time}); // DEBUG
+    // time = timer.lap(); // DEBUG
+
+    var part2: i64 = undefined;
+    outer: for (set) |num1, i| {
+        if (!num1) continue;
+        for (set[i..target-i]) |num2, j| {
+            const ij = i+j;
+            const remainder = target - i - ij;
+            if (set[remainder] and num2) {
+                part2 = @intCast(i64, i * ij * remainder);
                 break :outer;
             }
         }
     }
 
     // time = timer.lap(); // DEBUG
-    // print(">>> Time: {} ns\n", .{time}); // DEBUG
-    // time = timer.lap(); // DEBUG
-
-    var part2: i64 = undefined;
-    outer: for (expenses.items) |exp1| {
-        const target1 = 2020 - exp1;
-        middle: for (expenses.items) |exp2| {
-            if (target1 + exp2 >= 2020) {
-                continue :middle;
-            }
-            const target2 = target1 - exp2;
-            for (expenses.items) |exp3| {
-                if (exp3 == target2) {
-                    part2 = exp1 * exp2 * exp3;
-                    break :outer;
-                }
-            }
-        }
-    }
-
-    // time = timer.lap(); // DEBUG
-    // print(">>> Time: {} ns\n", .{time}); // DEBUG
+    // print(">>> Part 2: {} ns\n", .{time}); // DEBUG
 
     return Output{.part1 = part1, .part2 = part2};
 }

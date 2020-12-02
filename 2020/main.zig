@@ -26,7 +26,7 @@ pub fn main() anyerror!void {
         var timer = try Timer.start();
         const result = func(input) catch unreachable;
         const time = timer.lap();
-        print("--- Day {:2} 2020 in {:10} μs Part 1: {}\tPart 2: {}\n", .{str, time / 1000, result.part1, result.part2});
+        print("--- Day {:2} 2020 in {:10} μs Part 1: {}\tPart 2: {}\n", .{str, time / std.time.ns_per_us, result.part1, result.part2});
         
         // print("Hello, {}!\n", .{"world"});
     }

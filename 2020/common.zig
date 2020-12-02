@@ -5,11 +5,15 @@ pub const tokenize = mem.tokenize;
 const ArrayList = std.ArrayList;
 
 var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-pub const allocator = &gpa.allocator;
-// pub const allocator = std.heap.page_allocator;
+pub const gpa_allocator = &gpa.allocator;
+pub const heap_allocator = std.heap.page_allocator;
+
+var arena = std.heap.ArenaAllocator.init(heap_allocator);
+pub const arena_allocator = &arena.allocator;
+pub const allocator = heap_allocator;
 
 pub fn newVec(comptime typeOf: type) @TypeOf(ArrayList(typeOf).init(allocator)) {
-    return ArrayList(typeOf).init(allocator);
+    return std.ArrayList(typeOf).init(allocator);
 }
 
 pub fn print(comptime format: []const u8, args: anytype) void {
