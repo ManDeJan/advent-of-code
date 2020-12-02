@@ -20,7 +20,7 @@ pub fn main() anyerror!void {
         var list = newVec(u8);
         defer list.deinit();
 
-        try file.reader().readAllArrayList(&list, 16 * 1024);
+        try file.reader().readAllArrayList(&list, 1024 * 1024);
         const input = list.items;
 
         var timer = try Timer.start();
