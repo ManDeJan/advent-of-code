@@ -1,6 +1,6 @@
 usingnamespace @import("common.zig");
 
-pub const strs = [_][]const u8{"1", "2"};
+pub const strs = [_][]const u8{"1", "2", "3"};
 
 pub const funcs = blk: {
     var _funcs = [_]fn(Input) anyerror!Output{undefined} ** strs.len;

@@ -1,5 +1,10 @@
 usingnamespace @import("common.zig");
 
 pub fn run(input: Input) anyerror!Output {
-    return Output{.part1 = 4, .part2 = 5};
+    var part1: i64 = undefined;
+    var part2: i64 = undefined;
+
+    
+
+    return Output{.part1 = part1, .part2 = part2};
 }
