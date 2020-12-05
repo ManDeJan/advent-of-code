@@ -33,7 +33,7 @@ pub fn run(input: Input) anyerror!Output {
                 "ecl" => check_ecl(value),
                 "pid" => check_pid(value),
                 "cid" => check_cid(value),
-                else  => blk: {print("NANI DE FUK\n", .{}); break :blk true;},
+                else  => blk: {print("Wat?\n", .{}); break :blk true;},
             };
         }
         if (part_count == 7) { part1 += 1;   // alignment
