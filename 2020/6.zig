@@ -9,8 +9,8 @@ pub fn run(input: Input) anyerror!Output {
     while (groups.next()) | group | {
         var answered = [_]u8{0} ** questions_len;
         var group_size: u8 = 1;
-        for (group) | letter | {
-            if (letter == '\n') { group_size += 1; continue; }
+        for (group) | letter, c | {
+            if (letter == '\n' and c != group.len - 1) { group_size += 1; continue; }
             answered[letter - 'a'] += 1;
         }
         for (answered) | answer | {
