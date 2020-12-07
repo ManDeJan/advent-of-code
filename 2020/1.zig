@@ -4,13 +4,6 @@ const os = std.os;
 // Expected: Part 1: 719796 Part 2: 144554112
 
 pub fn run(input: Input) anyerror!Output {
-    
-    // asm volatile ("nop"); // ASM IDENTIFIERS
-    // asm volatile ("nop"); // ASM IDENTIFIERS
-    // asm volatile ("nop"); // ASM IDENTIFIERS
-
-    // var timer = try Timer.start(); // DEBUG
-    // var time: u64 = 0; // DEBUG
 
     const target = 2020;
     var set = [_]bool{false} ** (target + 1);
@@ -20,10 +13,6 @@ pub fn run(input: Input) anyerror!Output {
         set[try std.fmt.parseInt(u32, line, 10)] = true;
     }
     
-    // time = timer.lap(); // DEBUG
-    // print(">>> Parsing: {} ns\n", .{time}); // DEBUG
-    // time = timer.lap(); // DEBUG
-
     var part1: i64 = undefined;
     for (set) | num, i | {
         const remainder = target - i;
@@ -32,10 +21,6 @@ pub fn run(input: Input) anyerror!Output {
             break;
         }
     }
-
-    // time = timer.lap(); // DEBUG
-    // print(">>> Part 1: {} ns\n", .{time}); // DEBUG
-    // time = timer.lap(); // DEBUG
 
     var part2: i64 = undefined;
     outer: for (set) | num1, i | {
@@ -49,28 +34,6 @@ pub fn run(input: Input) anyerror!Output {
             }
         }
     }
-    // var i: usize = 1;
-    // outer: while (i < target) : (i += 1) {
-    //     const num1 = set[i];
-    //     if (!num1) continue;
-    //     var j: usize = i;
-    //     while (j < target - i) : (j += 1) {
-    //         const num2 = set[j];
-    //         const remainder = target - i - j;
-    //         if (set[remainder] and num2) {
-    //             // print("{}, {}, {}\n", .{i, j, remainder});
-    //             part2 = @intCast(i64, i * j * remainder);
-    //             break :outer;
-    //         }
-    //     }
-    // }
-
-    // time = timer.lap(); // DEBUG
-    // print(">>> Part 2: {} ns\n", .{time}); // DEBUG
-
-    // asm volatile ("nop"); // ASM IDENTIFIERS
-    // asm volatile ("nop"); // ASM IDENTIFIERS
-    // asm volatile ("nop"); // ASM IDENTIFIERS
 
     return Output{.part1 = part1, .part2 = part2};
 }
