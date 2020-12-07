@@ -10,7 +10,7 @@ pub const heap_allocator = std.heap.page_allocator;
 
 var arena = std.heap.ArenaAllocator.init(heap_allocator);
 pub const arena_allocator = &arena.allocator;
-pub const allocator = heap_allocator;
+pub const allocator = arena_allocator;
 
 pub fn newVec(comptime typeOf: type) @TypeOf(ArrayList(typeOf).init(allocator)) {
     return std.ArrayList(typeOf).init(allocator);

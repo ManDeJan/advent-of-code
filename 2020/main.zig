@@ -5,7 +5,7 @@ const days = @import("days.zig");
 
 pub fn main() anyerror!void {
 
-    var total_us: u64 = 0;
+    var total_ns: u64 = 0;
 
     for (days.strs) |str, i| {
         const input_filename = days.inputs[i];
@@ -26,8 +26,8 @@ pub fn main() anyerror!void {
         var timer = try Timer.start();
         const result = func(input) catch unreachable;
         const time = timer.lap();
+        total_ns += time;
         print("--- Day {:2} 2020 in {:10} μs Part 1: {}\tPart 2: {}\n", .{str, time / std.time.ns_per_us, result.part1, result.part2});
-        
-        // print("Hello, {}!\n", .{"world"});
     }
+    print("--- Total time: {} μs\n", .{total_ns / std.time.ns_per_us});
 }
