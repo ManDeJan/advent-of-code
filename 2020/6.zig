@@ -10,7 +10,7 @@ pub fn run(input: Input) anyerror!Output {
         var answered = [_]u8{0} ** questions_len;
         var group_size: u8 = 1;
         for (group) | letter, c | {
-            if (letter == '\n' and c != group.len - 1) { group_size += 1; continue; }
+            if (letter == '\n') { if (c != group.len - 1) group_size += 1; continue; }
             answered[letter - 'a'] += 1;
         }
         for (answered) | answer | {
