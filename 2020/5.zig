@@ -12,7 +12,7 @@ pub fn run(input: Input) anyerror!Output {
         var id: u32 = 0;
         for (pass[0..line_width-1]) | letter | {
             id <<= 1; // bit boop bap
-            id += @as(u32, ~(letter >> 2) & 1);
+            id |= @as(u32, ~(letter >> 2) & 1);
         }
         // print("{}\n", .{id});
         seats[id] = true;

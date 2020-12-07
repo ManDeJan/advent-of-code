@@ -7,10 +7,10 @@ pub fn run(input: Input) anyerror!Output {
     // var timer = try Timer.start(); // DEBUG
     // var time: u64 = 0; // DEBUG
     
-    var total_minnum: u64 = 0;
-    var total_maxnum: u64 = 0;
-    var total_part1: u64 = 0;
-    var total_part2: u64 = 0;
+    // var total_minnum: u64 = 0; // DEBUG
+    // var total_maxnum: u64 = 0; // DEBUG
+    // var total_part1: u64 = 0; // DEBUG
+    // var total_part2: u64 = 0; // DEBUG
 
     var lines = mem.tokenize(input, "\n");
     while (lines.next()) |line| {
