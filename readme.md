@@ -20,5 +20,5 @@ Day  2 in         25 μs
 Day  3 in          1 μs
 Day  4 in         57 μs
 Day  5 in          9 μs
-Day  6 in         57 μs
+Day  6 in         53 μs
 ```
