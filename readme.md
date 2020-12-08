@@ -7,11 +7,9 @@ Code assumes linux.
 
 # Timings
 
-Measurements are taken in a non scientific way. I run the benchmark a
-few times on my Ryzen 3700x processor (~4.2GHz) and then take the
-average of a couple run after I throw away the worst outliers. I compile
-everything with -OReleaseFast, I've noticed that on some benchmarks you
-can save a couple of μs compiling with -OReleaseSafe for some reason.
+Measurements are taken from an average of 5000 runs on my Ryzen 3700x processor
+(~4.2GHz) I compile everything with -OReleaseFast, I've noticed that on some
+benchmarks you can save a couple of μs compiling with -OReleaseSafe for some reason.
 
 ## 2020
 ```
