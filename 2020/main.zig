@@ -7,7 +7,8 @@ pub fn main() anyerror!void {
 
     var total_ns: u64 = 0;
 
-    for (days.strs) |str, i| {
+    inline for (days.strs) |str, i| {
+        @setEvalBranchQuota(2000000);
         const input_filename = days.inputs[i];
         const func = days.funcs[i];
 
@@ -22,6 +23,9 @@ pub fn main() anyerror!void {
 
         try file.reader().readAllArrayList(&list, 1024 * 1024);
         const input = list.items;
+
+        // const file = @embedFile(input_filename);
+        // const input = mem.sliceAsBytes(file);
 
         var timer = try Timer.start();
         const result = func(input) catch unreachable;
