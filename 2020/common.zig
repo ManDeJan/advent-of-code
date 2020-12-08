@@ -23,7 +23,7 @@ pub fn print(comptime format: []const u8, args: anytype) void {
 
 pub const Timer = std.time.Timer;
 
-pub const Input = []u8;
+pub const Input = []const u8;
 pub const Output = struct {
     part1: i64,
     part2: i64,

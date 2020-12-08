@@ -5,10 +5,11 @@ const days = @import("days.zig");
 
 pub fn main() anyerror!void {
 
+    const benchmark_count = 5000;
+
     var total_ns: u64 = 0;
 
     inline for (days.strs) |str, i| {
-        @setEvalBranchQuota(2000000);
         const input_filename = days.inputs[i];
         const func = days.funcs[i];
 
@@ -27,9 +28,15 @@ pub fn main() anyerror!void {
         // const file = @embedFile(input_filename);
         // const input = mem.sliceAsBytes(file);
 
-        var timer = try Timer.start();
-        const result = func(input) catch unreachable;
-        const time = timer.lap();
+        var result: Output = undefined;
+        var bench_i: usize = 0;
+        var bench_tot_time: usize = 0;
+        while (bench_i < benchmark_count) : (bench_i += 1) {
+            var timer = try Timer.start();
+            result = func(input) catch unreachable;
+            bench_tot_time += timer.lap();
+        }
+        const time = bench_tot_time / benchmark_count;
         total_ns += time;
         print("--- Day {:2} 2020 in {:10} μs Part 1: {}\tPart 2: {}\n", .{str, time / std.time.ns_per_us, result.part1, result.part2});
     }
