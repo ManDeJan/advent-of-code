@@ -7,20 +7,20 @@ Code assumes linux.
 
 # Timings
 
-Measurements are taken from an average of 5000 runs on my Ryzen 3700x processor
+Measurements are taken from an average of 50000 runs on my Ryzen 3700x processor
 (~4.2GHz) I compile everything with -OReleaseFast, I've noticed that on some
 benchmarks you can save a couple of μs compiling with -OReleaseSafe for some reason.
 
 ## 2020
 ```
-Day  1 in          3 μs (is faster with -OReleaseSafe)
-Day  2 in         22 μs
-Day  3 in          1 μs
-Day  4 in         48 μs
-Day  5 in          2 μs
-Day  6 in         44 μs
-Day  7 in         66 μs
-Day  8 in         55 μs
------------------------
-Total time:      245 μs
+--- Day  1 2020 in     2 μs Part 1:       719796 Part 2:    144554112
+--- Day  2 2020 in    22 μs Part 1:          460 Part 2:          251
+--- Day  3 2020 in     1 μs Part 1:          265 Part 2:   3154761400
+--- Day  4 2020 in    47 μs Part 1:          170 Part 2:          103
+--- Day  5 2020 in     2 μs Part 1:          926 Part 2:          657
+--- Day  6 2020 in    46 μs Part 1:         6596 Part 2:         3219
+--- Day  7 2020 in    66 μs Part 1:          119 Part 2:       155802
+--- Day  8 2020 in    44 μs Part 1:         2051 Part 2:         2304
+--- Day  9 2020 in    20 μs Part 1:     85848519 Part 2:     13414198
+--- Total time: 256 μs
 ```
