@@ -11,6 +11,9 @@ Measurements are taken from an average of 50000 runs on my Ryzen 3700x processor
 (~4.2GHz) I compile everything with -OReleaseFast, I've noticed that on some
 benchmarks you can save a couple of μs compiling with -OReleaseSafe for some reason.
 
+Every day is programmed as a function that receives a string and returns a pair
+of ints. This is what is measured, I decided not to include file I/O in the benchmarks because it causes a lot of variance and is not very interesting to optimize.
+
 ## 2020
 ```
 --- Day  1 2020 in     2 μs Part 1:       719796 Part 2:    144554112
