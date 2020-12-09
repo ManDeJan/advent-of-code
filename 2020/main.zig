@@ -38,7 +38,7 @@ pub fn main() anyerror!void {
         }
         const time = bench_tot_time / benchmark_count;
         total_ns += time;
-        print("--- Day {:2} 2020 in {:10} μs Part 1: {}\tPart 2: {}\n", .{str, time / std.time.ns_per_us, result.part1, result.part2});
+        print("--- Day {:2} 2020 in {:5} μs Part 1: {:12} Part 2: {:12}\n", .{str, time / std.time.ns_per_us, @intCast(u64, result.part1), @intCast(u64, result.part2)});
     }
     print("--- Total time: {} μs\n", .{total_ns / std.time.ns_per_us});
 }
