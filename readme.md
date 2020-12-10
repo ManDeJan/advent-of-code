@@ -19,12 +19,12 @@ of ints. This is what is measured, I decided not to include file I/O in the benc
 --- Day  1 2020 in     2 μs Part 1:          719796 Part 2:       144554112
 --- Day  2 2020 in    21 μs Part 1:             460 Part 2:             251
 --- Day  3 2020 in     1 μs Part 1:             265 Part 2:      3154761400
---- Day  4 2020 in    38 μs Part 1:             170 Part 2:             103
+--- Day  4 2020 in    36 μs Part 1:             170 Part 2:             103
 --- Day  5 2020 in     2 μs Part 1:             926 Part 2:             657
---- Day  6 2020 in    37 μs Part 1:            6596 Part 2:            3219
---- Day  7 2020 in    60 μs Part 1:             119 Part 2:          155802
---- Day  8 2020 in    42 μs Part 1:            2051 Part 2:            2304
+--- Day  6 2020 in    36 μs Part 1:            6596 Part 2:            3219
+--- Day  7 2020 in    58 μs Part 1:             119 Part 2:          155802
+--- Day  8 2020 in    41 μs Part 1:            2051 Part 2:            2304
 --- Day  9 2020 in    19 μs Part 1:        85848519 Part 2:        13414198
 --- Day 10 2020 in     0 μs Part 1:            2400 Part 2: 338510590509056
---- Total time: 227 μs
+--- Total time: 222 μs
 ```
