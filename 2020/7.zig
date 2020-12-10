@@ -15,7 +15,7 @@ const Rule = struct {
     }
 };
 
-pub fn run(input: Input) anyerror!Output {
+pub inline fn run(input: Input) anyerror!Output {
     var part1: i64 = -1;
     var part2: i64 = undefined;
 

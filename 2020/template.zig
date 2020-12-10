@@ -1,6 +1,6 @@
 usingnamespace @import("common.zig");
 
-pub fn run(input: Input) anyerror!Output {
+pub inline fn run(input: Input) anyerror!Output {
     var part1: i64 = undefined;
     var part2: i64 = undefined;
 

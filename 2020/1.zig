@@ -3,7 +3,7 @@ const os = std.os;
 
 // Expected: Part 1: 719796 Part 2: 144554112
 
-pub fn run(input: Input) anyerror!Output {
+pub inline fn run(input: Input) anyerror!Output {
 
     const target = 2020;
     var set = [_]bool{false} ** (target + 1);

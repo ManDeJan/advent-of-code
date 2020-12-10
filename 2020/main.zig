@@ -5,6 +5,7 @@ const days = @import("days.zig");
 
 pub fn main() anyerror!void {
 
+    const warmup_count = 0;
     const benchmark_count = 50000;
 
     var total_ns: u64 = 0;
@@ -31,10 +32,10 @@ pub fn main() anyerror!void {
         var result: Output = undefined;
         var bench_i: usize = 0;
         var bench_tot_time: usize = 0;
-        while (bench_i < benchmark_count) : (bench_i += 1) {
+        while (bench_i < benchmark_count + warmup_count) : (bench_i += 1) {
             var timer = try Timer.start();
             result = func(input) catch unreachable;
-            bench_tot_time += timer.lap();
+            if (bench_i > warmup_count) bench_tot_time += timer.lap();
         }
         const time = bench_tot_time / benchmark_count;
         total_ns += time;

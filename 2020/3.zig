@@ -1,6 +1,6 @@
 usingnamespace @import("common.zig");
 
-pub fn run(input: Input) anyerror!Output {
+pub inline fn run(input: Input) anyerror!Output {
     // var timer = try Timer.start(); // DEBUG
     // var time: u64 = 0; // DEBUG
 
