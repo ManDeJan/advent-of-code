@@ -5,7 +5,7 @@ const days = @import("days.zig");
 
 pub fn main() anyerror!void {
 
-    const warmup_count = 0;
+    const warmup_count = 100;
     const benchmark_count = 50000;
 
     var total_ns: u64 = 0;
