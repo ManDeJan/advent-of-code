@@ -34,12 +34,12 @@ pub fn main() !void {
         var bench_tot_time: usize = 0;
         while (bench_i < benchmark_count + warmup_count) : (bench_i += 1) {
             var timer = try aoc.Timer.start();
-            result = func(input) catch unreachable;
+            result = @call(.{.modifier = .never_inline}, func, .{input}) catch unreachable;
             if (bench_i > warmup_count) bench_tot_time += timer.lap();
         }
         const time = bench_tot_time / benchmark_count;
         total_ns += time;
-        aoc.print("--- Day {s:2} 2020 in {:5} μs Part 1: {:15} Part 2: {:15}\n", .{str, time / std.time.ns_per_us, @intCast(u64, result.part1), @intCast(u64, result.part2)});
+        aoc.print("--- Day {s:2} 2021 in {:5} μs Part 1: {:15} Part 2: {:15}\n", .{str, time / std.time.ns_per_us, @intCast(u64, result.part1), @intCast(u64, result.part2)});
     }
     aoc.print("--- Total time: {} μs\n", .{total_ns / std.time.ns_per_us});
 }
