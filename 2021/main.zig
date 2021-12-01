@@ -4,7 +4,7 @@ const os = std.os;
 
 const days = @import("days.zig");
 
-pub fn main() anyerror!void {
+pub fn main() !void {
     const warmup_count = 100;
     const benchmark_count = 50000;
 

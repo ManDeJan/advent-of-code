@@ -1,5 +1,13 @@
 pub const std = @import("std");
 pub const mem = std.mem;
+pub const Timer = std.time.Timer;
+
+pub const Input = []const u8;
+pub const Output = struct {
+    part1: i64,
+    part2: i64,
+};
+
 const ArrayList = std.ArrayList;
 
 var gpa = std.heap.GeneralPurposeAllocator(.{}){};
@@ -27,10 +35,11 @@ pub fn print(comptime format: []const u8, args: anytype) void {
     stdout.print(format, args) catch unreachable;
 }
 
-pub const Timer = std.time.Timer;
-
-pub const Input = []const u8;
-pub const Output = struct {
-    part1: i64,
-    part2: i64,
-};
+pub fn input_as_ints(comptime T: type, input: Input) !ArrayList(T) {
+    var lines = tokenize(input, "\n");
+    var nums = newVec(T);
+    while (lines.next()) |line| {
+        try nums.append(try std.fmt.parseInt(T, line, 10));
+    }
+    return nums;
+}
