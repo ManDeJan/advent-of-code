@@ -1,9 +1,10 @@
-usingnamespace @import("common.zig");
+const std = @import("std");
+const aoc = @import("common.zig");
 const os = std.os;
 
 // Expected: Part 1: 719796 Part 2: 144554112
 
-pub inline fn run(input: Input) anyerror!Output {
+pub inline fn run(input: aoc.Input) anyerror!aoc.Output {
 
     const target = 2020;
     var set = [_]bool{false} ** (target + 1);

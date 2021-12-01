@@ -1,9 +1,9 @@
-usingnamespace @import("common.zig");
+const aoc = @import("common.zig");
 
 pub const strs = [_][]const u8{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
 
 pub const funcs = blk: {
-    var _funcs = [_]fn(Input) anyerror!Output{undefined} ** strs.len;
+    var _funcs = [_]fn(aoc.Input) anyerror!aoc.Output{undefined} ** strs.len;
     inline for (strs) |day, i| {
         _funcs[i] = @import(day ++ ".zig").run;
     }

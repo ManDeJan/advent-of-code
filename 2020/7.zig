@@ -1,4 +1,5 @@
-usingnamespace @import("common.zig");
+const std = @import("std");
+const aoc = @import("common.zig");
 
 const Rule = struct {
     contains: [4]?*Rule,
@@ -15,7 +16,7 @@ const Rule = struct {
     }
 };
 
-pub inline fn run(input: Input) anyerror!Output {
+pub inline fn run(input: aoc.Input) anyerror!aoc.Output {
     var part1: i64 = -1;
     var part2: i64 = undefined;
 

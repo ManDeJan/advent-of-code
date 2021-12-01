@@ -1,6 +1,7 @@
-usingnamespace @import("common.zig");
+const std = @import("std");
+const aoc = @import("common.zig");
 
-pub inline fn run(input: Input) anyerror!Output {
+pub inline fn run(input: aoc.Input) anyerror!aoc.Output {
     // var timer = try Timer.start(); // DEBUG
     // var time: u64 = 0; // DEBUG
 
