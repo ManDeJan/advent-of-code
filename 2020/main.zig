@@ -5,7 +5,6 @@ const os = std.os;
 const days = @import("days.zig");
 
 pub fn main() anyerror!void {
-
     const warmup_count = 100;
     const benchmark_count = 50000;
 
@@ -40,7 +39,7 @@ pub fn main() anyerror!void {
         }
         const time = bench_tot_time / benchmark_count;
         total_ns += time;
-        aoc.print("--- Day {:2} 2020 in {:5} μs Part 1: {:15} Part 2: {:15}\n", .{str, time / std.time.ns_per_us, @intCast(u64, result.part1), @intCast(u64, result.part2)});
+        aoc.print("--- Day {s:2} 2020 in {:5} μs Part 1: {:15} Part 2: {:15}\n", .{str, time / std.time.ns_per_us, @intCast(u64, result.part1), @intCast(u64, result.part2)});
     }
     aoc.print("--- Total time: {} μs\n", .{total_ns / std.time.ns_per_us});
 }

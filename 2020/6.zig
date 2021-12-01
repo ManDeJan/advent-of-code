@@ -5,7 +5,7 @@ pub inline fn run(input: aoc.Input) anyerror!aoc.Output {
     var part1: i64 = 0;
     var part2: i64 = 0;
 
-    var groups = mem.split(input, "\n\n");
+    var groups = aoc.split(input, "\n\n");
     const questions_len = 26;
     while (groups.next()) | group | {
         var answered = [_]u8{0} ** questions_len;
@@ -20,5 +20,5 @@ pub inline fn run(input: aoc.Input) anyerror!aoc.Output {
         }
     }
 
-    return Output{.part1 = part1, .part2 = part2};
+    return aoc.Output{.part1 = part1, .part2 = part2};
 }

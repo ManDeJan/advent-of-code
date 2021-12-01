@@ -9,7 +9,7 @@ pub inline fn run(input: aoc.Input) anyerror!aoc.Output {
     const target = 2020;
     var set = [_]bool{false} ** (target + 1);
 
-    var lines = mem.tokenize(input, "\n");
+    var lines = aoc.tokenize(input, "\n");
     while (lines.next()) |line| {
         set[try std.fmt.parseInt(u32, line, 10)] = true;
     }
@@ -36,5 +36,5 @@ pub inline fn run(input: aoc.Input) anyerror!aoc.Output {
         }
     }
 
-    return Output{.part1 = part1, .part2 = part2};
+    return aoc.Output{.part1 = part1, .part2 = part2};
 }

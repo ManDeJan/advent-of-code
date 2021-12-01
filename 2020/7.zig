@@ -22,7 +22,7 @@ pub inline fn run(input: aoc.Input) anyerror!aoc.Output {
 
     var rules: [594]Rule = undefined; 
 
-    var lines = tokenize(input, "\n");
+    var lines = aoc.tokenize(input, "\n");
     while (lines.next()) | line | {
         const first_start_col = indexOfNthChar(1, 0, ' ', line).? + 1;
         var idx = indexOfNthChar(1, first_start_col, ' ', line).?;
@@ -54,7 +54,7 @@ pub inline fn run(input: aoc.Input) anyerror!aoc.Output {
         part1 += @as(i64, @boolToInt(contains_shiny_gold_bag(rule)));
     }
 
-    return Output{.part1 = part1, .part2 = part2};
+    return aoc.Output{.part1 = part1, .part2 = part2};
 }
 
 fn count_bags_recursive(root_rule: *Rule) i64 {
@@ -90,7 +90,7 @@ fn indexOfNthChar(comptime idx: usize, start: usize, comptime needle: u8, haysta
     return null;
 }
 
-const lookup_table = comptime blk: {
+const lookup_table = blk: {
     @setEvalBranchQuota(8000);
     var _lookup_table = [_]u16{0} ** 4717;
     var i = 0;
@@ -118,7 +118,7 @@ fn perfect_hash_bag(bag: []const u8, start_col: usize) u16 {
 
 const ads = [_][]const u8{"bright", "clear", "dark", "dim", "dotted", "drab", "dull", "faded", "light", "mirrored", "muted", "pale", "plaid", "posh", "shiny", "striped", "vibrant", "wavy"};
 const colors = [_][]const u8{"aqua", "beige", "black", "blue", "bronze", "brown", "chartreuse", "coral", "crimson", "cyan", "fuchsia", "gold", "gray", "green", "indigo", "lavender", "lime", "magenta", "maroon", "olive", "orange", "plum", "purple", "red", "salmon", "silver", "tan", "teal", "tomato", "turquoise", "violet", "white", "yellow"};
-const bag_names = comptime blk: {
+const bag_names = blk: {
     var _bag_names: [ads.len * colors.len][]const u8 = undefined;
     for (ads) |ad, i| {
         for (colors) |col, j| {

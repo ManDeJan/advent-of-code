@@ -5,7 +5,7 @@ pub inline fn run(input: aoc.Input) anyerror!aoc.Output {
     var part1: i64 = undefined;
     var part2: i64 = undefined;
 
-    var lines = mem.tokenize(input, "\n");
+    var lines = aoc.tokenize(input, "\n");
     const window_size = 25;
     var window = [_]u64{undefined} ** window_size;
     // fill window
@@ -56,5 +56,5 @@ pub inline fn run(input: aoc.Input) anyerror!aoc.Output {
         max = if (num > max) num else max;
     }
     part2 = @intCast(i64, min + max);
-    return Output{.part1 = part1, .part2 = part2};
+    return aoc.Output{.part1 = part1, .part2 = part2};
 }

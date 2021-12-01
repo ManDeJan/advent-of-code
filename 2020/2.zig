@@ -13,7 +13,7 @@ pub inline fn run(input: aoc.Input) anyerror!aoc.Output {
     // var total_part1: u64 = 0; // DEBUG
     // var total_part2: u64 = 0; // DEBUG
 
-    var lines = mem.tokenize(input, "\n");
+    var lines = aoc.tokenize(input, "\n");
     while (lines.next()) |line| {
         var offset: u32 = 2;
 
@@ -75,5 +75,5 @@ pub inline fn run(input: aoc.Input) anyerror!aoc.Output {
     // print(">>> Min: {} Max: {}, Part1: {}, Part2: {}\n", .{total_minnum, total_maxnum, total_part1, total_part2}); // DEBUG
     // print(">>> Total: {}\n", .{total_minnum + total_maxnum + total_part1 + total_part2}); // DEBUG
 
-    return Output{.part1 = part1, .part2 = part2};
+    return aoc.Output{.part1 = part1, .part2 = part2};
 }

@@ -1,13 +1,14 @@
 const std = @import("std");
+const mem = std.mem;
 const aoc = @import("common.zig");
 
 pub inline fn run(input: aoc.Input) anyerror!aoc.Output {
     var part1: i64 = 0;
     var part2: i64 = 0;
 
-    var lines = mem.split(input, "\n\n");
+    var lines = aoc.split(input, "\n\n");
     while (lines.next()) |line| {
-        var parts = mem.tokenize(line, "\n ");
+        var parts = aoc.tokenize(line, "\n ");
         var part_count: usize = 0;
         var valid = true;
 
@@ -30,7 +31,7 @@ pub inline fn run(input: aoc.Input) anyerror!aoc.Output {
         if (valid)             part2 += 1; } // yay or nay?
     }
 
-    return Output{.part1 = part1, .part2 = part2};
+    return aoc.Output{.part1 = part1, .part2 = part2};
 }
 
 fn match_str(value: []const u8) u32 {
@@ -110,5 +111,6 @@ fn check_pid(value: []const u8) bool {
 // cid (Country ID) - ignored, missing or not.
 fn check_cid(value: []const u8) bool {
     // print("{}\n", .{value});
+    _ = value;
     return true;
 }

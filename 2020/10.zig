@@ -6,7 +6,7 @@ pub inline fn run(input: aoc.Input) anyerror!aoc.Output {
     var part2: i64 = undefined;
 
     var joltages = [_]bool{false} ** 256; // preallocated
-    var lines = mem.tokenize(input, "\n");
+    var lines = aoc.tokenize(input, "\n");
     
     var max_joltage: u8 = 0;
     while (lines.next()) | line | {
@@ -43,5 +43,5 @@ pub inline fn run(input: aoc.Input) anyerror!aoc.Output {
                           pow(usize, 4, connected1s[4]) *
                           pow(usize, 2, connected1s[3]));
 
-    return Output{.part1 = part1, .part2 = part2};
+    return aoc.Output{.part1 = part1, .part2 = part2};
 }

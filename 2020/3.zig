@@ -44,5 +44,5 @@ pub inline fn run(input: aoc.Input) anyerror!aoc.Output {
     // time = timer.lap(); // DEBUG
     // print(">>> Time: {} ns\n", .{time}); // DEBUG
 
-    return Output{.part1 = part1, .part2 = part2};
+    return aoc.Output{.part1 = part1, .part2 = part2};
 }

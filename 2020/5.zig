@@ -9,7 +9,7 @@ pub inline fn run(input: aoc.Input) anyerror!aoc.Output {
     const passes = std.mem.bytesAsSlice([line_width]u8, input);
 
     var seats = [_]bool{false} ** 1024;
-    for (passes) | pass, c | {
+    for (passes) | pass | {
         var id: u32 = 0;
         for (pass[0..line_width-1]) | letter | {
             id <<= 1; // bit boop bap
@@ -26,5 +26,5 @@ pub inline fn run(input: aoc.Input) anyerror!aoc.Output {
         }
     }
 
-    return Output{.part1 = part1, .part2 = part2};
+    return aoc.Output{.part1 = part1, .part2 = part2};
 }

@@ -13,7 +13,7 @@ pub inline fn run(input: aoc.Input) anyerror!aoc.Output {
 
     var memory = [_]MemoryCell{undefined} ** mem_size;
 
-    var lines = tokenize(input, "\n");
+    var lines = aoc.tokenize(input, "\n");
     var i: usize = 0;
     while (lines.next()) | line | : (i += 1) {
         memory[i].amt = try std.fmt.parseInt(i32, line[4..], 10);
@@ -32,7 +32,7 @@ pub inline fn run(input: aoc.Input) anyerror!aoc.Output {
         }
         cell.ins ^= 4; // flip back
     }
-    return Output{.part1 = part1, .part2 = part2};
+    return aoc.Output{.part1 = part1, .part2 = part2};
 }
 
 fn run_code(memory: []MemoryCell) struct{acc: i64, term: bool} {
