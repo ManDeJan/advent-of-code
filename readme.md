@@ -14,6 +14,12 @@ benchmarks you can save a couple of μs compiling with -OReleaseSafe for some re
 Every day is programmed as a function that receives a string and returns a pair
 of ints. This is what is measured, I decided not to include file I/O in the benchmarks because it causes a lot of variance and is not very interesting to optimize.
 
+## 2021
+```
+--- Day  1 2020 in    14 μs Part 1:            1387 Part 2:            1362
+--- Total time: 14 μs
+```
+
 ## 2020
 ```
 --- Day  1 2020 in     2 μs Part 1:          719796 Part 2:       144554112
