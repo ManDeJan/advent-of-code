@@ -1,37 +1,29 @@
 const std = @import("std");
 const aoc = @import("common.zig");
 
-pub fn run(input: aoc.Input) !aoc.Output {
+pub noinline fn run(input: aoc.Input) !aoc.Output {
     var part1: i64 = undefined;
     var part2: i64 = undefined;
 
-    var part_1_horizontal_pos: i64 = 0;
-    var part_1_depth: i64 = 0;
-
-    var part_2_horizontal_pos: i64 = 0;
-    var part_2_depth: i64 = 0;
-    var part_2_aim: i64 = 0;
+    var horizontal_pos: i64 = 0;
+    var vertical_pos:   i64 = 0;
+    var aim: i64 = 0;
 
     var lines = aoc.tokenize(input, "\n");
     while (lines.next()) |line| {
         if (line[0] == 'f') {
             const distance = get_distance(line, "forward");
-            part_1_horizontal_pos += distance;
-            part_2_horizontal_pos += distance;
-            part_2_depth += part_2_aim * distance;
+            horizontal_pos += distance;
+            vertical_pos   += distance * aim;
         } else if (line[0] == 'd') {
-            const distance = get_distance(line, "down");
-            part_1_depth += distance;
-            part_2_aim += distance;
+            aim += get_distance(line, "down");
         } else if (line[0] == 'u') {
-            const distance = get_distance(line, "up");
-            part_1_depth -= distance;
-            part_2_aim -= distance;
+            aim -= get_distance(line, "up");
         }
     }
 
-    part1 = part_1_horizontal_pos * part_1_depth;
-    part2 = part_2_horizontal_pos * part_2_depth;
+    part1 = horizontal_pos * aim;
+    part2 = horizontal_pos * vertical_pos;
     return aoc.Output{.part1 = part1, .part2 = part2};
 }
 
