@@ -1,11 +1,12 @@
 const std = @import("std");
 const aoc = @import("common.zig");
 
-pub inline fn run(input: aoc.Input) !aoc.Output {
+pub fn run(input: aoc.Input) !aoc.Output {
     var part1: i64 = 0;
     var part2: i64 = 0;
 
     var nums = try aoc.input_as_ints(u32, input);
+    defer nums.deinit();
 
     for (nums.items[0..nums.items.len-1]) | num, i | {
         if (num < nums.items[i + 1]) { part1 += 1; }

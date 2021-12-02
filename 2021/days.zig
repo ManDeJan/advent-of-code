@@ -2,14 +2,16 @@ const aoc = @import("common.zig");
 
 pub const strs = [_][]const u8{
     "1",
+    "2",
 };
 
 pub const days = .{
     @import("1.zig"),
+    @import("2.zig"),
 };
 
 pub const funcs = blk: {
-    var _funcs = [_]fn(aoc.Input) callconv(.Inline) anyerror!aoc.Output{undefined} ** strs.len;
+    var _funcs = [_]fn(aoc.Input) anyerror!aoc.Output{undefined} ** strs.len;
     inline for (days) |day, i| {
         _funcs[i] = day.run;
     }
@@ -17,8 +19,7 @@ pub const funcs = blk: {
 };
 pub const inputs = blk: {
     var _inputs = [_][]const u8{undefined} ** strs.len;
-    inline for (strs) |day,
-    i| {
+    inline for (strs) |day, i| {
         _inputs[i] = "input/" ++ day ++ ".txt";
     }
     break :blk _inputs;
