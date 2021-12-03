@@ -7,7 +7,7 @@ pub noinline fn run(input: aoc.Input) !aoc.Output {
 
     var nums = try aoc.inputAsInts(u12, input, 2);
     defer nums.deinit();
-    std.sort.sort(u12, nums.items, {}, comptime std.sort.desc(u12));
+    std.sort.sort(u12, nums.items, {}, comptime std.sort.asc(u12));
 
     var bit_counts = [_]u32{0} ** 12;
     for (nums.items) |num| {
