@@ -3,11 +3,13 @@ const aoc = @import("common.zig");
 pub const strs = [_][]const u8{
     "1",
     "2",
+    "3",
 };
 
 pub const days = .{
     @import("1.zig"),
     @import("2.zig"),
+    @import("3.zig"),
 };
 
 pub const funcs = blk: {

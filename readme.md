@@ -18,7 +18,8 @@ of ints. This is what is measured, I decided not to include file I/O in the benc
 ```
 --- Day  1 2021 in    14 μs Part 1:            1387 Part 2:            1362
 --- Day  2 2021 in     6 μs Part 1:         1488669 Part 2:      1176514794
---- Total time: 14 μs
+--- Day  3 2021 in    53 μs Part 1:         3969000 Part 2:         4267809
+--- Total time: 74 μs
 ```
 
 ## 2020

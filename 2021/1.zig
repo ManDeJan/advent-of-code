@@ -5,7 +5,7 @@ pub fn run(input: aoc.Input) !aoc.Output {
     var part1: i64 = 0;
     var part2: i64 = 0;
 
-    var nums = try aoc.input_as_ints(u32, input);
+    var nums = try aoc.inputAsInts(u32, input, 10);
     defer nums.deinit();
 
     for (nums.items[0..nums.items.len-1]) | num, i | {
