@@ -63,7 +63,7 @@ pub noinline fn run(input: aoc.Input) !aoc.Output {
     return aoc.Output{.part1 = part1, .part2 = part2};
 }
 
-fn calculateBoardSum(board: [25]u8, board_total: u32) u32 {
+inline fn calculateBoardSum(board: [25]u8, board_total: u32) u32 {
     const sum = blk: {
         var acc: u32 = 0;
         for (board) |num| {
