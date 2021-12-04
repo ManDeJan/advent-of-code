@@ -1,25 +1,22 @@
 # Advent of Code solutions
 
-Will we reach day 3 this year? :eyes:
-
+In zig, cause we gotta go fast B)
 Run code with `zig build-exe main.zig --single-threaded -OReleaseFast && ./main`
-Code assumes linux.
 
 # Timings
 
 Measurements are taken from an average of 50000 runs on my Ryzen 3700x processor
-(~4.2GHz) I compile everything with -OReleaseFast, I've noticed that on some
-benchmarks you can save a couple of μs compiling with -OReleaseSafe for some reason.
-
+(~4.2GHz) I compile everything with -OReleaseFast
 Every day is programmed as a function that receives a string and returns a pair
 of ints. This is what is measured, I decided not to include file I/O in the benchmarks because it causes a lot of variance and is not very interesting to optimize.
 
 ## 2021
 ```
---- Day  1 2021 in    14 μs Part 1:            1387 Part 2:            1362
+--- Day  1 2021 in    16 μs Part 1:            1387 Part 2:            1362
 --- Day  2 2021 in     6 μs Part 1:         1488669 Part 2:      1176514794
---- Day  3 2021 in    50 μs Part 1:         3969000 Part 2:         4267809
---- Total time: 72 μs
+--- Day  3 2021 in    49 μs Part 1:         3969000 Part 2:         4267809
+--- Day  4 2021 in    94 μs Part 1:           49686 Part 2:           26878
+--- Total time: 168 μs
 ```
 
 ## 2020
