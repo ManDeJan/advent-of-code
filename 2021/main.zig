@@ -6,7 +6,7 @@ const days = @import("days.zig");
 
 pub fn main() !void {
     const warmup_count = 10000;
-    const benchmark_count = 10000;
+    const benchmark_count = 20000;
     // const warmup_count = 0;
     // const benchmark_count = 1;
     // const warmup_count = 10;
@@ -36,13 +36,13 @@ pub fn main() !void {
         var result: aoc.Output = undefined;
         var bench_i: usize = 0;
         var bench_tot_time: usize = 0;
-        while (bench_i <= benchmark_count + warmup_count) : (bench_i += 1) {
+        while (bench_i < benchmark_count + warmup_count) : (bench_i += 1) {
             var timer = try aoc.Timer.start();
             result = func(input) catch unreachable;
             // result = try func(input);
             // below does not work because https://github.com/ziglang/zig/issues/5170
             // result = callWrapper(.{.modifier = .always_inline}, func, .{input}) catch unreachable;
-            if (bench_i > warmup_count) bench_tot_time += timer.lap();
+            if (bench_i >= warmup_count) bench_tot_time += timer.lap();
         }
         const time = bench_tot_time / benchmark_count;
         total_ns += time;

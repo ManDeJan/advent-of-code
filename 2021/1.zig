@@ -1,7 +1,7 @@
 const std = @import("std");
 const aoc = @import("common.zig");
 
-pub fn run(input: aoc.Input) !aoc.Output {
+pub noinline fn run(input: aoc.Input) !aoc.Output {
     var part1: i64 = 0;
     var part2: i64 = 0;
 

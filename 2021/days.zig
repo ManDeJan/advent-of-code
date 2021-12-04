@@ -4,12 +4,14 @@ pub const strs = [_][]const u8{
     "1",
     "2",
     "3",
+    "4",
 };
 
 pub const days = .{
     @import("1.zig"),
     @import("2.zig"),
     @import("3.zig"),
+    @import("4.zig"),
 };
 
 pub const funcs = blk: {

@@ -32,7 +32,7 @@ pub noinline fn run(input: aoc.Input) !aoc.Output {
 inline fn filter_nums(nums: []u12, comptime inv: bool) !u12 {
     var set = try aoc.allocator.alloc(bool, nums.len);
     defer aoc.allocator.free(set);
-    std.mem.set(bool, set, false); // this 
+    std.mem.set(bool, set, false);
 
     var filtered_out: u32 = 0;
 
