@@ -5,16 +5,16 @@ const os = std.os;
 const days = @import("days.zig");
 
 pub fn main() !void {
-    // const warmup_count = 1000;
-    // const benchmark_count = 50000;
-    const warmup_count = 0;
-    const benchmark_count = 1;
+    const warmup_count = 100;
+    const benchmark_count = 1000;
+    // const warmup_count = 0;
+    // const benchmark_count = 1;
     // const warmup_count = 10;
     // const benchmark_count = 100;
 
     var total_ns: u64 = 0;
 
-    inline for (days.strs) |str, i| {
+    for (days.strs) |str, i| {
         const input_filename = days.inputs[i];
         const func = days.funcs[i];
 
@@ -43,6 +43,7 @@ pub fn main() !void {
             // below does not work because https://github.com/ziglang/zig/issues/5170
             // result = callWrapper(.{.modifier = .always_inline}, func, .{input}) catch unreachable;
             if (bench_i >= warmup_count) bench_tot_time += timer.lap();
+
         }
         const time = bench_tot_time / benchmark_count;
         total_ns += time;
