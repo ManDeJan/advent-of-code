@@ -13,7 +13,7 @@ pub noinline fn run(input: aoc.Input) !aoc.Output {
         try nums.append(num);
         sum += num;
     }
-    // std.sort.sort(u16, nums.items, {}, comptime std.sort.asc(u16));
+    std.sort.sort(u16, nums.items, {}, comptime std.sort.asc(u16));
 
     const len = @intCast(u32, nums.items.len);
     const mean1 = sum / len;
@@ -24,7 +24,6 @@ pub noinline fn run(input: aoc.Input) !aoc.Output {
     var part2_2: u32 = 0;
     for (nums.items) |num| {
         part1 += if (num < median) median - num else num - median;
-        
         const distance1 = if (num < mean1) mean1 - num else num - mean1;
         const distance2 = if (num < mean2) mean2 - num else num - mean2;
         part2_1 += distance1 * (distance1 + 1) / 2;

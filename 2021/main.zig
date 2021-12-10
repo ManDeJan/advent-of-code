@@ -5,10 +5,10 @@ const os = std.os;
 const days = @import("days.zig");
 
 pub fn main() !void {
-    const warmup_count = 100;
-    const benchmark_count = 1000;
-    // const warmup_count = 0;
-    // const benchmark_count = 1;
+    // const warmup_count = 100;
+    // const benchmark_count = 10000;
+    const warmup_count = 0;
+    const benchmark_count = 1;
     // const warmup_count = 10;
     // const benchmark_count = 100;
 

@@ -1,7 +1,7 @@
 const std = @import("std");
 const aoc = @import("common.zig");
 
-pub fn run(input: aoc.Input) !aoc.Output {
+pub noinline fn run(input: aoc.Input) !aoc.Output {
     var part1: i64 = 0;
     var part2: i64 = 0;
 
@@ -19,7 +19,7 @@ pub fn run(input: aoc.Input) !aoc.Output {
 
 fn calculate_lookup_table(comptime days: usize) [9]usize {
     @setEvalBranchQuota(8000);
-    var i = 0;
+    var i: usize = 0;
     var pond  = [_]usize{0} ** 9;
     var table = [_]usize{0} ** 9;
     pond[0] = 1;
@@ -29,7 +29,7 @@ fn calculate_lookup_table(comptime days: usize) [9]usize {
         pond[6] += pond[8];
         if (i >= days - 9) {
             table[8 - (i - (days-9))] = blk: {
-                var sum = 0; 
+                var sum: usize = 0; 
                 for (pond) | fish | { sum += fish; }
                 break :blk sum;
             };
