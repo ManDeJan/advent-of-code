@@ -12,3 +12,18 @@ pub fn run(input: aoc.Input) !aoc.Output {
 
     return aoc.Output{.part1 = part1, .part2 = part2};
 }
+
+test "2015-01" {
+    try aoc.testPart1(0, run("(())"));
+    try aoc.testPart1(0, run("()()"));
+    try aoc.testPart1(3, run("((("));
+    try aoc.testPart1(3, run("(()(()("));
+    try aoc.testPart1(3, run("))((((("));
+    try aoc.testPart1(-1, run("())"));
+    try aoc.testPart1(-1, run("))("));
+    try aoc.testPart1(-3, run(")))"));
+    try aoc.testPart1(-3, run(")())())"));
+
+    try aoc.testPart2(1, run(")"));
+    try aoc.testPart2(5, run("()())"));
+}

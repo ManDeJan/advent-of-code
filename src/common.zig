@@ -51,3 +51,18 @@ pub fn inputAsInts(comptime T: type, input: Input, comptime radix: anytype) !Arr
 pub fn range(comptime size: comptime_int) [size]void {
     return [_]void{{}} ** size; // hide the jank B)
 }
+
+pub fn testPart1(part1: i64, output: anyerror!Output) !void {
+    try std.testing.expectEqual(part1, (try output).part1);
+}
+
+pub fn testPart2(part2: i64, output: anyerror!Output) !void {
+    try std.testing.expectEqual(part2, (try output).part2);
+}
+
+pub fn testBoth(part1: i64, part2: i64, output: anyerror!Output) !void {
+    try testPart1(part1, output);
+    try testPart2(part2, output);
+}
+
+pub const testEqual = std.testing.expectEqual;

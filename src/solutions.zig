@@ -16,14 +16,14 @@ pub const solutions = [_]SolutionYear{
     .{
         .year = "2015",
         .days = &.{
-            "1", "2", "3", "4",// "5", "6", "7", "8", "9", "10",
+            "1", "2", "3", "4", "5",// "6", "7", "8", "9", "10",
         },
         .funcs = &.{
             @import("2015/1.zig").run,
             @import("2015/2.zig").run,
             @import("2015/3.zig").run,
             @import("2015/4.zig").run,
-            // @import("2015/5.zig").run,
+            @import("2015/5.zig").run,
             // @import("2015/6.zig").run,
             // @import("2015/7.zig").run,
             // @import("2015/8.zig").run,

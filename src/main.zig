@@ -45,3 +45,7 @@ pub fn main() !void {
     aoc.print("-------------------\n", .{});
     aoc.print("Total time:\x1B[1m {:5} μs\x1B[0m\n", .{total_ns / std.time.ns_per_us});
 }
+
+test {
+    std.testing.refAllDecls(@This());
+}
