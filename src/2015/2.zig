@@ -26,7 +26,7 @@ fn partialSort3Numbers(dims: *[3]u8) void {
     // if (dims[0] > dims[1]) std.mem.swap(u8, &dims[0], &dims[1]);
 }
 
-test "2015-02" {
+test "2015-2" {
     try aoc.testBoth(58, 34, run("2x3x4"));
     try aoc.testBoth(43, 14, run("1x1x10"));
 }

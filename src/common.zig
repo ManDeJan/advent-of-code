@@ -52,6 +52,10 @@ pub fn range(comptime size: comptime_int) [size]void {
     return [_]void{{}} ** size; // hide the jank B)
 }
 
+pub fn field(comptime dim_x: comptime_int, comptime dim_y: comptime_int, init: anytype) @TypeOf([_][dim_x]@TypeOf(init){[_]@TypeOf(init){init} ** dim_x} ** dim_y) {
+    return [_][dim_x]@TypeOf(init){[_]@TypeOf(init){init} ** dim_x} ** dim_y;
+}
+
 pub fn testPart1(part1: i64, output: anyerror!Output) !void {
     try std.testing.expectEqual(part1, (try output).part1);
 }

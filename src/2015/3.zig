@@ -39,7 +39,7 @@ pub fn run(input: aoc.Input) !aoc.Output {
     return aoc.Output{.part1 = part1, .part2 = part2};
 }
 
-test "2015-03" {
+test "2015-3" {
     try aoc.testPart1(2, run(">"));
     try aoc.testPart2(3, run("^v"));
     try aoc.testBoth(4, 3, run("^>v<"));

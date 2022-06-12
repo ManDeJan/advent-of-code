@@ -28,7 +28,7 @@ pub fn run(input: aoc.Input) !aoc.Output {
     return aoc.Output{.part1 = part1, .part2 = part2};
 }
 
-test "2015-04" {
+test "2015-4" {
     // currently disabled because they're so slow
     // try aoc.testPart1(609043, run("abcdef"));
     // try aoc.testPart1(1048970, run("pqrstuv"));
