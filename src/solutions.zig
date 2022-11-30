@@ -9,7 +9,7 @@ const aoc = @import("common.zig");
 pub const SolutionYear = struct {
     year: []const u8,
     days: []const []const u8,
-    funcs: []const fn(aoc.Input) anyerror!aoc.Output
+    funcs: []const *const fn(aoc.Input) anyerror!aoc.Output
 };
 
 pub const solutions = [_]SolutionYear{
@@ -29,6 +29,15 @@ pub const solutions = [_]SolutionYear{
             // @import("2015/8.zig").run,
             // @import("2015/9.zig").run,
             // @import("2015/10.zig").run,
+        }
+    },
+    .{
+        .year = "2016",
+        .days = &.{
+            "1",
+        },
+        .funcs = &.{
+            @import("2016/1.zig").run,
         }
     },
     .{
