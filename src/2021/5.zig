@@ -25,7 +25,7 @@ pub noinline fn run(input: aoc.Input) !aoc.Output {
         });
     }
 
-    var field align(4096) = [_][991]u8{[_]u8{0} ** 991} ** 991; // oof
+    var field align(4096) = aoc.field(991, 991, @as(u8, 0));
 
     for (lines.items) |line| {
         if (line.x1 == line.x2) {
