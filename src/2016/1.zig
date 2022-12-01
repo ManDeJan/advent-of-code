@@ -7,8 +7,8 @@ pub fn run(input: aoc.Input) !aoc.Output {
     var part2_found = false;
 
     var lines = aoc.tokenize(input, ", \n");
-    var x: i32 = 0;
-    var y: i32 = 0;
+    var x: i16 = 0;
+    var y: i16 = 0;
     const direction_vector = [4][2]i8{
         // X   Y
         .{ 0,  1}, // North
@@ -17,15 +17,17 @@ pub fn run(input: aoc.Input) !aoc.Output {
         .{-1,  0}, // West
     };
     var direction: u2 = 0;
-    var past_dirs = std.AutoHashMap([2]i32, void).init(aoc.allocator);
+    var past_dirs = std.AutoHashMap([2]i16, void).init(aoc.allocator);
+    defer past_dirs.deinit();
+    try past_dirs.ensureTotalCapacity(256);
     try past_dirs.put(.{0, 0}, {});
     while (lines.next()) |line| {
              if (line[0] == 'L') { direction -%= 1; }
         else if (line[0] == 'R') { direction +%= 1; }
         const current_direction_vector = direction_vector[direction];
-        const distance: i32 = try std.fmt.parseInt(u8, line[1..], 10);
+        const distance: i16 = try std.fmt.parseInt(u8, line[1..], 10);
 
-        {var i: i32 = 1; while (!part2_found and i <= distance) : (i += 1) {
+        {var i: i16 = 1; while (!part2_found and i <= distance) : (i += 1) {
             if (try past_dirs.fetchPut(.{x + i * current_direction_vector[0],
                                          y + i * current_direction_vector[1]}, {})) |kv| {
                 part2 = try std.math.absInt(kv.key[0]) + try std.math.absInt(kv.key[1]);
