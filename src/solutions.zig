@@ -78,10 +78,11 @@ pub const solutions = [_]SolutionYear{
     .{
         .year = "2022",
         .days = &.{
-            "1",
+            "1", "2",
         },
         .funcs = &.{
             @import("2022/1.zig").run,
+            @import("2022/2.zig").run,
         }
     },
 };
