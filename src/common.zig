@@ -8,6 +8,11 @@ pub const Output = struct {
     part2: i64,
 };
 
+pub const SolutionFnType = union(enum) {
+    outputAsInt: *const fn(Input) anyerror!Output,
+    outputAsText: *const fn(Input, []u8, []u8) anyerror!void,
+};
+
 const ArrayList = std.ArrayList;
 
 var gpa = std.heap.GeneralPurposeAllocator(.{}){};
@@ -67,6 +72,14 @@ pub fn testPart2(part2: i64, output: anyerror!Output) !void {
 pub fn testBoth(part1: i64, part2: i64, output: anyerror!Output) !void {
     try testPart1(part1, output);
     try testPart2(part2, output);
+}
+
+pub fn testBothText(part1: []const u8, part2: []const u8, solution: anytype, input: []const u8) !void {
+    var result_text_1 = std.mem.zeroes([15:0]u8);
+    var result_text_2 = std.mem.zeroes([15:0]u8);
+    try solution(input, &result_text_1, &result_text_2);
+    try std.testing.expectEqualBytes(part1, result_text_1[0..std.mem.indexOfScalar(u8, &result_text_1, 0) orelse result_text_1.len]);
+    try std.testing.expectEqualBytes(part2, result_text_2[0..std.mem.indexOfScalar(u8, &result_text_2, 0) orelse result_text_2.len]);
 }
 
 pub const testEqual = std.testing.expectEqual;
