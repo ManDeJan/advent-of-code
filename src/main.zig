@@ -63,11 +63,12 @@ pub fn main() !void {
 
             var bench_i: usize = 0;
             var bench_tot_time: usize = 0;
+            var timer = try aoc.Timer.start();
             while (bench_i < benchmark_count + warmup_count) : (bench_i += 1) {
-                var timer = try aoc.Timer.start();
+                timer.reset();
                 switch (func_type) {
-                    inline .outputAsInt => |func| result = func(input) catch unreachable,
-                    inline .outputAsText => |func| func(input, &result_text_1, &result_text_2) catch unreachable,
+                    .outputAsInt => |func| result = func(input) catch unreachable,
+                    .outputAsText => |func| func(input, &result_text_1, &result_text_2) catch unreachable,
                 }
                 if (bench_i >= warmup_count) bench_tot_time += timer.lap();
             }

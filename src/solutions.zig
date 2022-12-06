@@ -80,12 +80,14 @@ pub const solutions = [_]SolutionYear{
     .{
         .year = "2022",
         .days = &.{
-            "1", "2", "5",
+            "1", "2", "3", "5", "6"
         },
         .funcs = &.{
             getSolution(@import("2022/1.zig")),
             getSolution(@import("2022/2.zig")),
+            getSolution(@import("2022/3.zig")),
             getSolution(@import("2022/5.zig")),
+            getSolution(@import("2022/6.zig")),
         },
     },
 };
