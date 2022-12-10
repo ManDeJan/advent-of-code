@@ -85,9 +85,16 @@ pub fn main() !void {
                 },
                 else => {},
             }
-            aoc.print("Day {s:2} in {:7} μs Part 1: {s: >15} Part 2: {s: >15}\n", .{
+            var timefmt = time / std.time.ns_per_us;
+            var symbol: []const u8 = "μ";
+            if (false and timefmt <= 1) {
+                timefmt = time;
+                symbol = "n";
+            }
+            aoc.print("Day {s:2} in {:7} {s}s Part 1: {s: >15} Part 2: {s: >15}\n", .{
                 solution_day,
-                time / std.time.ns_per_us,
+                timefmt,
+                symbol,
                 @ptrCast([*:0]u8, &result_text_1),
                 @ptrCast([*:0]u8, &result_text_2),
             });

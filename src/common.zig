@@ -68,11 +68,7 @@ pub fn field(
     return [_][dim_x]@TypeOf(init){[_]@TypeOf(init){init} ** dim_x} ** dim_y;
 }
 
-
-
-
-// cols = [0, 0, 2, 2, 5, 5]
-// idxs = [0, 3, 1, 3, 1, 3]
+// Trust me bro
 pub inline fn ocr_6x5_once(comptime fill: u8, comptime none: u8, rows: [6][]const u8) u8 {
     const bits: [6]u8 = .{ rows[0][0], rows[0][3], rows[2][1], rows[2][3], rows[5][1], rows[5][3] };
     for (bits) |bit| std.debug.assert(bit == fill or bit == none);
