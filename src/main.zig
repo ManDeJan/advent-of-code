@@ -68,15 +68,22 @@ pub fn main() !void {
                 timer.reset();
                 switch (func_type) {
                     .outputAsInt => |func| result = func(input) catch unreachable,
+                    .outputAsIntText => |func| result.part1 = func(input, &result_text_2) catch unreachable,
                     .outputAsText => |func| func(input, &result_text_1, &result_text_2) catch unreachable,
                 }
                 if (bench_i >= warmup_count) bench_tot_time += timer.lap();
             }
             const time = bench_tot_time / benchmark_count;
             year_ns += time;
-            if (func_type == .outputAsInt) {
-                _ = std.fmt.formatIntBuf(&result_text_1, result.part1, 10, .lower, .{});
-                _ = std.fmt.formatIntBuf(&result_text_2, result.part2, 10, .lower, .{});
+            switch (func_type) {
+                .outputAsInt => {
+                    _ = std.fmt.formatIntBuf(&result_text_1, result.part1, 10, .lower, .{});
+                    _ = std.fmt.formatIntBuf(&result_text_2, result.part2, 10, .lower, .{});
+                },
+                .outputAsIntText => {
+                    _ = std.fmt.formatIntBuf(&result_text_1, result.part1, 10, .lower, .{});
+                },
+                else => {},
             }
             aoc.print("Day {s:2} in {:7} μs Part 1: {s: >15} Part 2: {s: >15}\n", .{
                 solution_day,

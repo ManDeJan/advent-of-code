@@ -3,14 +3,17 @@ pub const mem = std.mem;
 pub const Timer = std.time.Timer;
 
 pub const Input = []const u8;
+pub const OutputPart1 = i64;
+pub const OutputPart2 = i64;
 pub const Output = struct {
-    part1: i64,
-    part2: i64,
+    part1: OutputPart1,
+    part2: OutputPart2,
 };
 
 pub const SolutionFnType = union(enum) {
-    outputAsInt: *const fn(Input) anyerror!Output,
-    outputAsText: *const fn(Input, []u8, []u8) anyerror!void,
+    outputAsInt: *const fn (Input) anyerror!Output,
+    outputAsText: *const fn (Input, []u8, []u8) anyerror!void,
+    outputAsIntText: *const fn (Input, []u8) anyerror!OutputPart2,
 };
 
 const ArrayList = std.ArrayList;
@@ -57,8 +60,68 @@ pub fn range(comptime size: comptime_int) [size]void {
     return [_]void{{}} ** size; // hide the jank B)
 }
 
-pub fn field(comptime dim_x: comptime_int, comptime dim_y: comptime_int, init: anytype) @TypeOf([_][dim_x]@TypeOf(init){[_]@TypeOf(init){init} ** dim_x} ** dim_y) {
+pub fn field(
+    comptime dim_x: comptime_int,
+    comptime dim_y: comptime_int,
+    init: anytype,
+) @TypeOf([_][dim_x]@TypeOf(init){[_]@TypeOf(init){init} ** dim_x} ** dim_y) {
     return [_][dim_x]@TypeOf(init){[_]@TypeOf(init){init} ** dim_x} ** dim_y;
+}
+
+
+
+
+// cols = [0, 0, 2, 2, 5, 5]
+// idxs = [0, 3, 1, 3, 1, 3]
+pub inline fn ocr_6x5_once(comptime fill: u8, comptime none: u8, rows: [6][]const u8) u8 {
+    const bits: [6]u8 = .{ rows[0][0], rows[0][3], rows[2][1], rows[2][3], rows[5][1], rows[5][3] };
+    for (bits) |bit| std.debug.assert(bit == fill or bit == none);
+    if (bits[0] == fill) {
+        if (bits[1] == fill) {
+            if (bits[2] == fill) {
+                if (bits[3] == fill) return 'H';
+                if (bits[4] == fill) return 'E';
+                if (bits[5] == fill) return 'K';
+                return 'F';
+            }
+            if (bits[3] == fill) return 'U';
+            return 'Z';
+        }
+        if (bits[2] == fill) {
+            if (bits[3] == fill) return 'Y';
+            return 'B';
+        }
+        if (bits[3] == fill) {
+            if (bits[5] == fill) return 'R';
+            return 'P';
+        }
+        return 'L';
+    }
+    if (bits[1] == fill) {
+        if (bits[3] == fill) return 'J';
+        if (bits[5] == fill) return 'I';
+        return 'S';
+    }
+    if (bits[3] == fill) {
+        if (bits[4] == fill) return 'O';
+        return 'A';
+    }
+    if (bits[5] == fill) return 'G';
+    return 'C';
+}
+
+pub fn ocr_6x5(comptime fill: u8, comptime none: u8, buf: []u8, rows: [6][]const u8) void {
+    var i: u8 = 0;
+    while (i < rows[0].len / 5) : (i += 1) {
+        buf[i] = ocr_6x5_once(fill, none, .{
+            rows[0][i * 5 ..],
+            rows[1][i * 5 ..],
+            rows[2][i * 5 ..],
+            rows[3][i * 5 ..],
+            rows[4][i * 5 ..],
+            rows[5][i * 5 ..],
+        });
+    }
 }
 
 pub fn testPart1(part1: i64, output: anyerror!Output) !void {
@@ -78,8 +141,8 @@ pub fn testBothText(part1: []const u8, part2: []const u8, solution: anytype, inp
     var result_text_1 = std.mem.zeroes([15:0]u8);
     var result_text_2 = std.mem.zeroes([15:0]u8);
     try solution(input, &result_text_1, &result_text_2);
-    try std.testing.expectEqualBytes(part1, result_text_1[0..std.mem.indexOfScalar(u8, &result_text_1, 0) orelse result_text_1.len]);
-    try std.testing.expectEqualBytes(part2, result_text_2[0..std.mem.indexOfScalar(u8, &result_text_2, 0) orelse result_text_2.len]);
+    try std.testing.expectEqualSlices(u8, part1, result_text_1[0 .. std.mem.indexOfScalar(u8, &result_text_1, 0) orelse result_text_1.len]);
+    try std.testing.expectEqualSlices(u8, part2, result_text_2[0 .. std.mem.indexOfScalar(u8, &result_text_2, 0) orelse result_text_2.len]);
 }
 
 pub const testEqual = std.testing.expectEqual;

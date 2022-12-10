@@ -1,9 +1,10 @@
 const aoc = @import("common.zig");
 
 fn getSolution(comptime import: anytype) aoc.SolutionFnType {
-    const argc = @typeInfo(@TypeOf(import.run)).Fn.args.len;
-    return switch (argc) {
+    const args = @typeInfo(@TypeOf(import.run)).Fn.args;
+    return switch (args.len) {
         1 => .{.outputAsInt = import.run},
+        2 => .{.outputAsIntText = import.run},
         else => .{.outputAsText = import.run},
     };
 }
@@ -80,7 +81,7 @@ pub const solutions = [_]SolutionYear{
     .{
         .year = "2022",
         .days = &.{
-            "1", "2", "3", "5", "6"
+            "1", "2", "3", "5", "6", "10"
         },
         .funcs = &.{
             getSolution(@import("2022/1.zig")),
@@ -88,6 +89,8 @@ pub const solutions = [_]SolutionYear{
             getSolution(@import("2022/3.zig")),
             getSolution(@import("2022/5.zig")),
             getSolution(@import("2022/6.zig")),
+            // getSolution(@import("2022/9.zig")),
+            getSolution(@import("2022/10.zig")),
         },
     },
 };
