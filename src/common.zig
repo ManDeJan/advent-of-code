@@ -69,7 +69,7 @@ pub fn field(
 }
 
 // Trust me bro
-pub inline fn ocr_6x5_once(comptime fill: u8, comptime none: u8, rows: [6][]const u8) u8 {
+pub fn ocr_6x5_once(comptime fill: u8, comptime none: u8, rows: [6][]const u8) u8 {
     const bits: [6]u8 = .{ rows[0][0], rows[0][3], rows[2][1], rows[2][3], rows[5][1], rows[5][3] };
     for (bits) |bit| std.debug.assert(bit == fill or bit == none);
     if (bits[0] == fill) {
@@ -106,10 +106,49 @@ pub inline fn ocr_6x5_once(comptime fill: u8, comptime none: u8, rows: [6][]cons
     return 'C';
 }
 
+pub fn ocr_6x5_once_alt(comptime fill: u8, comptime none: u8, rows: [6][]const u8) u8 {
+    const bits: [6]u8 = .{ rows[5][3], rows[0][3], rows[2][3], rows[0][0], rows[1][3], rows[5][1] };
+    for (bits) |bit| std.debug.assert(bit == fill or bit == none);
+    if (bits[0] == fill) {
+        if (bits[1] == fill) {
+            if (bits[2] == fill) return 'H';
+            if (bits[3] == fill) {
+                if (bits[4] == fill) return 'Z';
+                if (bits[5] == fill) return 'E';
+                return 'K';
+            }
+            return 'I';
+        }
+        if (bits[2] == fill) {
+            if (bits[3] == fill) return 'R';
+            return 'A';
+        }
+        if (bits[3] == fill) return 'L';
+        return 'G';
+    }
+    if (bits[1] == fill) {
+        if (bits[2] == fill) {
+            if (bits[3] == fill) return 'U';
+            return 'J';
+        }
+        if (bits[3] == fill) return 'F';
+        return 'S';
+    }
+    if (bits[2] == fill) {
+        if (bits[3] == fill) {
+            if (bits[4] == fill) return 'P';
+            return 'Y';
+        }
+        return 'O';
+    }
+    if (bits[3] == fill) return 'B';
+    return 'C';
+}
+
 pub fn ocr_6x5(comptime fill: u8, comptime none: u8, buf: []u8, rows: [6][]const u8) void {
     var i: u8 = 0;
     while (i < rows[0].len / 5) : (i += 1) {
-        buf[i] = ocr_6x5_once(fill, none, .{
+        buf[i] = ocr_6x5_once_alt(fill, none, .{
             rows[0][i * 5 ..],
             rows[1][i * 5 ..],
             rows[2][i * 5 ..],
