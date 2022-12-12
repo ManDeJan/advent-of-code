@@ -12,8 +12,8 @@ pub fn run(input: aoc.Input) !aoc.Output {
     var start: ?Point = null;
     var end: ?Point = null;
     outer: for (map) |row, y| for (row) |point, x| {
-        if (point == 'S') start = Point{ .x = @truncate(u16, x), .y = @truncate(u16, y) };
-        if (point == 'E') end = Point{ .x = @truncate(u16, x), .y = @truncate(u16, y) };
+        if (point == 'S') start = Point{ .x = @truncate(u8, x), .y = @truncate(u8, y) };
+        if (point == 'E') end = Point{ .x = @truncate(u8, x), .y = @truncate(u8, y) };
         if (start != null and end != null) break :outer;
     };
     map[start.?.y][start.?.x] = 'a';
@@ -27,30 +27,35 @@ const MapHeight = 41 + 2;
 const MapType = @TypeOf(aoc.field(MapWidth, MapHeight, @as(u8, 0)));
 
 inline fn breadth_first_search(map: *const MapType, start: Point, end: Point) !aoc.Output {
-    var frontier = std.ArrayList(PointCost).init(aoc.allocator);
-    defer frontier.deinit();
+    // var frontier = std.ArrayList(PointCost).init(aoc.allocator);
+    // defer frontier.deinit();
+    // try frontier.ensureTotalCapacity(1 << 13);
 
+    var frontier: [64]PointCost align(8) = undefined;
     var came_from align(8) = aoc.field(MapWidth, MapHeight, false);
 
-    try frontier.ensureTotalCapacity(1 << 13);
-    frontier.appendAssumeCapacity(.{ .point = start, .cost = 0 });
+    frontier[0] = .{ .point = start, .cost = 0 };
     came_from[start.y][start.x] = true;
 
     var part1: i64 = 0;
     var part2: ?i64 = null;
 
-    var i: usize = 0;
+    var read_idx: usize = 0;
+    var write_idx: usize = 1;
 
     while (true) { // assume there is always a path in the input
-        const current = frontier.items[i];
-        i += 1;
+        const current = frontier[read_idx % frontier.len];
+        read_idx += 1;
         const current_point = current.point;
         const current_cost = current.cost;
         const our_value = map[current_point.y][current_point.x];
 
         if (our_value == 'a') {
-            if (part2 == null) { part2 = current_cost; } // assumes we always find part2 before part1
-            else if (std.meta.eql(current_point, end)) { part1 = current_cost; break;}
+            if (part2 == null) part2 = current_cost // assumes we always find part2 before part1
+            else if (std.meta.eql(current_point, end)) {
+                part1 = current_cost;
+                break;
+            }
         }
 
         for (get_neighbours(current_point)) |next| {
@@ -60,7 +65,8 @@ inline fn breadth_first_search(map: *const MapType, start: Point, end: Point) !a
             const new_cost = current_cost + 1;
             if (!came_from[next.y][next.x]) {
                 came_from[next.y][next.x] = true;
-                frontier.appendAssumeCapacity(.{.point = next, .cost = new_cost});
+                frontier[write_idx % frontier.len] = .{ .point = next, .cost = new_cost };
+                write_idx += 1;
             }
         }
     }
@@ -77,11 +83,11 @@ inline fn get_neighbours(point: Point) [4]Point {
 }
 
 const Point = packed struct {
-    x: u16 = 0,
-    y: u16 = 0,
+    x: u8 = 0,
+    y: u8 = 0,
 };
 
-const Cost = u32;
+const Cost = u16;
 
 const PointCost = packed struct {
     cost: Cost,
