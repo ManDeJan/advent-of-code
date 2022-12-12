@@ -2,7 +2,7 @@ const std = @import("std");
 const aoc = @import("common.zig");
 
 pub fn run(input: aoc.Input) !aoc.Output {
-    var map: MapType align(8) = aoc.field(161 + 2, 61 + 1, @as(u8, 0));
+    var map: MapType align(8) = aoc.field(MapWidth, MapHeight, @as(u8, 0));
 
     var lines = aoc.split(input, "\n");
     {var i: usize = 0; while (lines.next()) |line| : (i += 1) {
@@ -22,29 +22,28 @@ pub fn run(input: aoc.Input) !aoc.Output {
     return try breadth_first_search(&map, end.?, start.?);
 }
 
-const MapType = @TypeOf(aoc.field(161 + 2, 61 + 1, @as(u8, 0)));
+const MapWidth = 161 + 2;
+const MapHeight = 61 + 1;
+const MapType = @TypeOf(aoc.field(MapWidth, MapHeight, @as(u8, 0)));
 
 inline fn breadth_first_search(map: *const MapType, start: Point, end: Point) !aoc.Output {
-    var frontier = std.PriorityDequeue(PointCost, void, struct {
-        pub fn lessThan(_: void, a: PointCost, b: PointCost) std.math.Order {
-            return std.math.order(a.cost, b.cost);
-        }
-    }.lessThan).init(aoc.allocator, {});
+    var frontier = std.ArrayList(PointCost).init(aoc.allocator);
     defer frontier.deinit();
-    try frontier.ensureTotalCapacity(1 << 7);
 
-    var came_from = std.AutoHashMap(Point, PointCost).init(aoc.allocator);
-    defer came_from.deinit();
-    try came_from.ensureTotalCapacity(1 << 13);
+    var came_from align(8) = aoc.field(MapWidth, MapHeight, false);
 
-    try frontier.add(.{ .point = start, .cost = 0 });
-    try came_from.put(start, .{ .point = start, .cost = 0 });
+    try frontier.ensureTotalCapacity(1 << 13);
+    frontier.appendAssumeCapacity(.{ .point = start, .cost = 0 });
+    came_from[start.y][start.x] = true;
 
     var part1: i64 = 0;
     var part2: ?i64 = null;
 
+    var i: usize = 0;
+
     while (true) { // assume there is always a path in the input
-        const current = frontier.removeMin();
+        const current = frontier.items[i];
+        i += 1;
         const current_point = current.point;
         const current_cost = current.cost;
         const our_value = map[current_point.y][current_point.x];
@@ -59,9 +58,9 @@ inline fn breadth_first_search(map: *const MapType, start: Point, end: Point) !a
             if (next_value < our_value and our_value - next_value > 1) continue;
 
             const new_cost = current_cost + 1;
-            if (!came_from.contains(next) or new_cost < came_from.get(next).?.cost) {
-                came_from.putAssumeCapacity(next, .{.point = next, .cost = new_cost});
-                try frontier.add(.{.point = next, .cost = new_cost});
+            if (!came_from[next.y][next.x]) {
+                came_from[next.y][next.x] = true;
+                frontier.appendAssumeCapacity(.{.point = next, .cost = new_cost});
             }
         }
     }
