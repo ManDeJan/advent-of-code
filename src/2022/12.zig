@@ -40,10 +40,10 @@ inline fn breadth_first_search(map: *const MapType, start: Point, end: Point) !a
     try frontier.add(.{ .point = start, .cost = 0 });
     try came_from.put(start, .{ .point = start, .cost = 0 });
 
-    var part1: ?i64 = null;
+    var part1: i64 = 0;
     var part2: ?i64 = null;
 
-    while (true) {
+    while (true) { // assume there is always a path in the input
         const current = frontier.removeMin();
         const current_point = current.point;
         const current_cost = current.cost;
@@ -65,7 +65,7 @@ inline fn breadth_first_search(map: *const MapType, start: Point, end: Point) !a
             }
         }
     }
-    return .{ .part1 = part1.?, .part2 = part2.? };
+    return .{ .part1 = part1, .part2 = part2.? };
 }
 
 inline fn get_neighbours(point: Point) [4]Point {
