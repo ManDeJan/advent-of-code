@@ -23,7 +23,7 @@ pub fn run(input: aoc.Input) !aoc.Output {
 }
 
 const MapWidth = 161 + 2;
-const MapHeight = 61 + 1;
+const MapHeight = 41 + 2;
 const MapType = @TypeOf(aoc.field(MapWidth, MapHeight, @as(u8, 0)));
 
 inline fn breadth_first_search(map: *const MapType, start: Point, end: Point) !aoc.Output {
