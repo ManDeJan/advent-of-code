@@ -90,6 +90,12 @@ const PointCost = packed struct {
 };
 
 test "2022-12" {
-    try aoc.testPart1(0, run(""));
-    try aoc.testPart2(0, run(""));
+    try aoc.testBoth(31, 29, run(
+        \\Sabqponm
+        \\abcryxxl
+        \\accszExk
+        \\acctuvwj
+        \\abdefghi
+        \\
+    ));
 }
