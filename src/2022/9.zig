@@ -15,43 +15,46 @@ pub fn run(input: aoc.Input) !aoc.Output {
     try uniques1.ensureTotalCapacity(10000);
     try uniques2.ensureTotalCapacity(10000);
 
-    var movements = aoc.tokenize(input, "\n");
+    var movements = aoc.tokenizeScalar(input, '\n');
     while (movements.next()) |movement| {
         const dir = directionToVector(movement[0]);
         const amount = try std.fmt.parseInt(u8, movement[2..], 10);
 
-        {var i: usize = 0; while (i < amount) : (i += 1) {
-            rope[0] = rope[0].add(dir);
-            for (aoc.range(rope.len - 1)) |_, j| {
-                const delta = rope[j].sub(rope[j + 1]);
-                if (std.math.absCast(delta.x) + std.math.absCast(delta.y) >= 2) {
-                    rope[j + 1] = rope[j + 1].add(Point{.x = std.math.sign(delta.x),
-                                                        .y = std.math.sign(delta.y)});
+        {
+            var i: usize = 0;
+            while (i < amount) : (i += 1) {
+                rope[0] = rope[0].add(dir);
+                inline for (0..(rope.len - 1)) |j| {
+                    const delta = rope[j].sub(rope[j + 1]);
+                    if (@abs(delta.x) > 1 or @abs(delta.y) > 1) {
+                        rope[j + 1] = rope[j + 1].add(Point{ .x = std.math.sign(delta.x), .y = std.math.sign(delta.y) });
+                    }
                 }
+                uniques1.putAssumeCapacity(rope[1], {});
+                uniques2.putAssumeCapacity(rope[9], {});
             }
-            uniques1.putAssumeCapacity(rope[1], {});
-            uniques2.putAssumeCapacity(rope[9], {});
-        }}
+        }
     }
 
-    part1 = @intCast(i64, uniques1.count());
-    part2 = @intCast(i64, uniques2.count());
+    part1 = @intCast(uniques1.count());
+    part2 = @intCast(uniques2.count());
 
-    return aoc.Output{.part1 = part1, .part2 = part2};
+    return aoc.Output{ .part1 = part1, .part2 = part2 };
 }
 
 fn directionToVector(dir: u8) Point {
     return switch (dir) {
-        'R' => .{.x =  1, .y =  0},
-        'L' => .{.x = -1, .y =  0},
-        'U' => .{.x =  0, .y =  1},
-        'D' => .{.x =  0, .y = -1},
+        'R' => .{ .x = 1, .y = 0 },
+        'L' => .{ .x = -1, .y = 0 },
+        'U' => .{ .x = 0, .y = 1 },
+        'D' => .{ .x = 0, .y = -1 },
         else => unreachable,
     };
 }
 
 const Point = struct {
-    x: i16 = 0, y: i16 = 0,
+    x: i16 = 0,
+    y: i16 = 0,
 
     pub inline fn add(self: Point, other: Point) Point {
         return .{

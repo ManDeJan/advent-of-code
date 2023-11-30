@@ -1,11 +1,11 @@
 const aoc = @import("common.zig");
 
 fn getSolution(comptime import: anytype) aoc.SolutionFnType {
-    const args = @typeInfo(@TypeOf(import.run)).Fn.args;
-    return switch (args.len) {
-        1 => .{.outputAsInt = import.run},
-        2 => .{.outputAsIntText = import.run},
-        else => .{.outputAsText = import.run},
+    const params = @typeInfo(@TypeOf(import.run)).Fn.params;
+    return switch (params.len) {
+        1 => .{ .outputAsInt = import.run },
+        2 => .{ .outputAsIntText = import.run },
+        else => .{ .outputAsText = import.run },
     };
 }
 
@@ -81,7 +81,8 @@ pub const solutions = [_]SolutionYear{
     .{
         .year = "2022",
         .days = &.{
-            "1", "2", "3", "5", "6", "7", "9", "10", "11", "12"
+            "1", "2", "3", "5", "6", "7", "9", "10", "11", "12",
+            // "12",
         },
         .funcs = &.{
             getSolution(@import("2022/1.zig")),
@@ -94,6 +95,27 @@ pub const solutions = [_]SolutionYear{
             getSolution(@import("2022/10.zig")),
             getSolution(@import("2022/11.zig")),
             getSolution(@import("2022/12.zig")),
+            // getSolution(@import("2022/14.zig")),
+        },
+    },
+    .{
+        .year = "2023",
+        .days = &.{
+            // "1", "2", "3", "5", "6", "7", "9", "10", "11", "12",
+            // "12",
+        },
+        .funcs = &.{
+            // getSolution(@import("2022/1.zig")),
+            // getSolution(@import("2022/2.zig")),
+            // getSolution(@import("2022/3.zig")),
+            // getSolution(@import("2022/5.zig")),
+            // getSolution(@import("2022/6.zig")),
+            // getSolution(@import("2022/7.zig")),
+            // getSolution(@import("2022/9.zig")),
+            // getSolution(@import("2022/10.zig")),
+            // getSolution(@import("2022/11.zig")),
+            // getSolution(@import("2022/12.zig")),
+            // getSolution(@import("2022/14.zig")),
         },
     },
 };

@@ -48,12 +48,18 @@ pub noinline fn run(input: aoc.Input) !aoc.Output {
             var begin_y = if (line.x1 < line.x2) line.y1 else line.y2;
             const end_y = if (line.x1 < line.x2) line.y2 else line.y1;
             if (begin_y < end_y) {
-                while (begin_x <= end_x) : ({begin_x += 1; begin_y += 1;}) {
+                while (begin_x <= end_x) : ({
+                    begin_x += 1;
+                    begin_y += 1;
+                }) {
                     field[begin_y][begin_x] += 1;
                     if (field[begin_y][begin_x] == 2) part2 += 1;
                 }
             } else {
-                while (begin_x <= end_x) : ({begin_x += 1; begin_y -= 1;}) {
+                while (begin_x <= end_x) : ({
+                    begin_x += 1;
+                    begin_y -= 1;
+                }) {
                     field[begin_y][begin_x] += 1;
                     if (field[begin_y][begin_x] == 2) part2 += 1;
                 }
@@ -61,5 +67,5 @@ pub noinline fn run(input: aoc.Input) !aoc.Output {
         }
     }
     part2 += part1;
-    return aoc.Output{.part1 = part1, .part2 = part2};
+    return aoc.Output{ .part1 = part1, .part2 = part2 };
 }

@@ -41,24 +41,23 @@ pub noinline fn run(input: aoc.Input) !aoc.Output {
             output_digits.next().?,
         };
         for (outputs) |output| {
-            inline for (.{2,3,4,7}) |unique_len| {
-                if (@intCast(u8, output.len) == unique_len) part1 += 1;
+            inline for (.{ 2, 3, 4, 7 }) |unique_len| {
+                if (@as(u8, @intCast(output.len)) == unique_len) part1 += 1;
             }
         }
         var input_digits = aoc.tokenize(line[0..58], " ");
-        var one_string:  *const [2]u8 = undefined;
+        var one_string: *const [2]u8 = undefined;
         var four_string: *const [4]u8 = undefined;
         var four_min_one_string: [2]u8 = undefined;
 
         var found_one = false;
         var found_four = false;
-        for (aoc.range(10)) |_| {
+        for (0..10) |_| {
             const next_input = input_digits.next().?;
             if (next_input.len == 2) {
                 one_string = next_input[0..2];
                 found_one = true;
-            }
-            else if (next_input.len == 4) {
+            } else if (next_input.len == 4) {
                 four_string = next_input[0..4];
                 found_four = true;
             }
@@ -66,14 +65,15 @@ pub noinline fn run(input: aoc.Input) !aoc.Output {
         }
 
         var found_one_match = false;
-        for (aoc.range(4)) |_, i| {
+        for (0..4) |i| {
             if (four_string[i] != one_string[0] and
-                four_string[i] != one_string[1]) {
-                four_min_one_string[@boolToInt(found_one_match)] = four_string[i];
+                four_string[i] != one_string[1])
+            {
+                four_min_one_string[@intFromBool(found_one_match)] = four_string[i];
                 found_one_match = true;
             }
         }
-        for ([_]u32{1000, 100, 10, 1}) |order, i| {
+        for ([_]u32{ 1000, 100, 10, 1 }, 0..) |order, i| {
             part2 += order * @as(u32, switch (outputs[i].len) {
                 2 => 1,
                 3 => 7,
@@ -82,13 +82,13 @@ pub noinline fn run(input: aoc.Input) !aoc.Output {
 
                 5 => @as(u32, blk: {
                     var one_matches: u32 = 0;
-                    for (aoc.range(5)) |_, j| {
+                    for (0..5) |j| {
                         if (outputs[i][j] == one_string[0] or outputs[i][j] == one_string[1])
                             one_matches += 1;
                     }
                     if (one_matches == 2) break :blk 3;
                     var four_matches: u32 = 0;
-                    for (aoc.range(5)) |_, j| {
+                    for (0..5) |j| {
                         if (outputs[i][j] == four_min_one_string[0] or outputs[i][j] == four_min_one_string[1])
                             four_matches += 1;
                     }
@@ -97,13 +97,13 @@ pub noinline fn run(input: aoc.Input) !aoc.Output {
                 }),
                 6 => @as(u32, blk: {
                     var one_matches: u32 = 0;
-                    for (aoc.range(6)) |_, j| {
+                    for (0..6) |j| {
                         if (outputs[i][j] == one_string[0] or outputs[i][j] == one_string[1])
                             one_matches += 1;
                     }
                     if (one_matches == 1) break :blk 6;
                     var four_matches: u32 = 0;
-                    for (aoc.range(6)) |_, j| {
+                    for (0..6) |j| {
                         if (outputs[i][j] == four_min_one_string[0] or outputs[i][j] == four_min_one_string[1])
                             four_matches += 1;
                     }
@@ -114,5 +114,5 @@ pub noinline fn run(input: aoc.Input) !aoc.Output {
             });
         }
     }
-    return aoc.Output{.part1 = part1, .part2 = part2};
+    return aoc.Output{ .part1 = part1, .part2 = part2 };
 }

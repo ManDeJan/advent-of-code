@@ -7,7 +7,7 @@ pub fn run(input: aoc.Input) anyerror!aoc.Output {
 
     // var timer = try Timer.start(); // DEBUG
     // var time: u64 = 0; // DEBUG
-    
+
     // var total_minnum: u64 = 0; // DEBUG
     // var total_maxnum: u64 = 0; // DEBUG
     // var total_part1: u64 = 0; // DEBUG
@@ -18,7 +18,7 @@ pub fn run(input: aoc.Input) anyerror!aoc.Output {
         var offset: u32 = 2;
 
         // time = timer.lap(); // DEBUG
-        
+
         const minnum = blk: {
             var _minnum: u32 = undefined;
             _minnum = line[0] - '0';
@@ -37,9 +37,9 @@ pub fn run(input: aoc.Input) anyerror!aoc.Output {
         const maxnum = blk: {
             var _maxnum: u32 = undefined;
             _maxnum = line[offset] - '0';
-            if (line[offset+1] != ' ') {
+            if (line[offset + 1] != ' ') {
                 _maxnum *= 10;
-                _maxnum += line[offset+1] - '0';
+                _maxnum += line[offset + 1] - '0';
                 offset += 1;
             }
             offset += 2;
@@ -54,7 +54,7 @@ pub fn run(input: aoc.Input) anyerror!aoc.Output {
         offset += 2;
 
         var count: u32 = 0;
-        for (line[offset+1..]) | char | {
+        for (line[offset + 1 ..]) |char| {
             if (char == key) count += 1;
         }
         if (minnum <= count and count <= maxnum) part1 += 1;
@@ -63,7 +63,7 @@ pub fn run(input: aoc.Input) anyerror!aoc.Output {
         // total_part1 += time; // DEBUG
         // time = timer.lap(); // DEBUG
 
-        if ((line[offset+minnum] == key) != (line[offset+maxnum] == key)) {
+        if ((line[offset + minnum] == key) != (line[offset + maxnum] == key)) {
             part2 += 1;
         }
 
@@ -75,5 +75,5 @@ pub fn run(input: aoc.Input) anyerror!aoc.Output {
     // print(">>> Min: {} Max: {}, Part1: {}, Part2: {}\n", .{total_minnum, total_maxnum, total_part1, total_part2}); // DEBUG
     // print(">>> Total: {}\n", .{total_minnum + total_maxnum + total_part1 + total_part2}); // DEBUG
 
-    return aoc.Output{.part1 = part1, .part2 = part2};
+    return aoc.Output{ .part1 = part1, .part2 = part2 };
 }

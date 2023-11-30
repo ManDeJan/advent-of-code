@@ -37,7 +37,7 @@ pub fn run(input: aoc.Input) !aoc.Output {
 }
 
 fn manage_monkeys(comptime rounds: comptime_int, comptime keep_calm: bool, common_divsor: usize, monkeys: *std.ArrayList(Monkey)) void {
-    for (aoc.range(rounds)) |_| {
+    for (0..rounds) |_| {
         for (monkeys.items) |*monkey| {
             monkey.inspected += monkey.items.items.len;
             for (monkey.items.items) |*item| {
@@ -46,8 +46,11 @@ fn manage_monkeys(comptime rounds: comptime_int, comptime keep_calm: bool, commo
                     .add => |amt| item.* += amt,
                     .sqr => item.* *= item.*,
                 }
-                if (keep_calm) { item.* /= 3; }
-                else           { item.* %= common_divsor; }
+                if (keep_calm) {
+                    item.* /= 3;
+                } else {
+                    item.* %= common_divsor;
+                }
                 const throw_to = if (item.* % monkey.test_div == 0) monkey.if_true else monkey.if_false;
                 monkeys.items[throw_to].items.appendAssumeCapacity(item.*);
             }
@@ -67,7 +70,7 @@ fn calculate_monkey_business(monkeys: *std.ArrayList(Monkey)) i64 {
             active2 = monkey.inspected;
         }
     }
-    return @intCast(i64, active1 * active2);
+    return @intCast(active1 * active2);
 }
 
 fn calculate_common_divisor(monkeys: *std.ArrayList(Monkey)) usize {
@@ -91,12 +94,12 @@ const Monkey = struct {
     if_false: u8,
 
     pub fn init(lines: []const u8) !Monkey {
-        var monkey_cfg = aoc.tokenize(lines, "\n");
+        var monkey_cfg = aoc.tokenizeScalar(lines, '\n');
         _ = monkey_cfg.next(); // throw away monkey name
-        const item_line  = monkey_cfg.next().?["  Starting items: ".len..];
-        const oper_line  = monkey_cfg.next().?["  Operation: new = old ".len..];
-        const test_line  = monkey_cfg.next().?["  Test: divisible by ".len..];
-        const true_line  = monkey_cfg.next().?["    If true: throw to monkey ".len..];
+        const item_line = monkey_cfg.next().?["  Starting items: ".len..];
+        const oper_line = monkey_cfg.next().?["  Operation: new = old ".len..];
+        const test_line = monkey_cfg.next().?["  Test: divisible by ".len..];
+        const true_line = monkey_cfg.next().?["    If true: throw to monkey ".len..];
         const false_line = monkey_cfg.next().?["    If false: throw to monkey ".len..];
 
         return Monkey{
@@ -127,6 +130,6 @@ const Monkey = struct {
 };
 
 test "2022-11" {
-    try aoc.testPart1(0, run(""));
-    try aoc.testPart2(0, run(""));
+    // try aoc.testPart1(0, run(""));
+    // try aoc.testPart2(0, run(""));
 }

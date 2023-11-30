@@ -79,7 +79,7 @@ pub const Md5 = struct {
 
         // Copy any remainder for next pass.
         mem.copy(u8, d.buf[d.buf_len..], b[off..]);
-        d.buf_len += @intCast(u8, b[off..].len);
+        d.buf_len += @intCast(b[off..].len);
 
         // Md5 uses the bottom 64-bits for length padding
         d.total_len +%= b.len;
@@ -87,7 +87,7 @@ pub const Md5 = struct {
 
     pub fn final(d: *Self, out: *[digest_length]u8) void {
         // The buffer here will never be completely full.
-        mem.set(u8, d.buf[d.buf_len..], 0);
+        @memset(d.buf[d.buf_len..], 0);
 
         // Append padding bits.
         d.buf[d.buf_len] = 0x80;
@@ -96,22 +96,23 @@ pub const Md5 = struct {
         // > 448 mod 512 so need to add an extra round to wrap around.
         if (64 - d.buf_len < 8) {
             d.round(d.buf[0..]);
-            mem.set(u8, d.buf[0..], 0);
+            @memset(d.buf[0..], 0);
         }
 
         // Append message length.
         var i: usize = 1;
         var len = d.total_len >> 5;
-        d.buf[56] = @intCast(u8, d.total_len & 0x1f) << 3;
+        d.buf[56] = @intCast(d.total_len & 0x1f);
+        d.buf[56] <<= 3;
         while (i < 8) : (i += 1) {
-            d.buf[56 + i] = @intCast(u8, len & 0xff);
+            d.buf[56 + i] = @intCast(len & 0xff);
             len >>= 8;
         }
 
         d.round(d.buf[0..]);
 
-        for (d.s) |s, j| {
-            mem.writeIntLittle(u32, out[4 * j ..][0..4], s);
+        for (d.s, 0..) |s, j| {
+            mem.writeInt(u32, out[4 * j ..][0..4], s, .little);
         }
     }
 

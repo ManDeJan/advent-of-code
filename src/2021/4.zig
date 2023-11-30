@@ -23,7 +23,7 @@ pub noinline fn run(input: aoc.Input) !aoc.Output {
     while (lines.next()) |board_line| {
         var board_nums = aoc.tokenize(board_line, " \n");
         var board: [25]u8 = undefined;
-        for (board) |*num| {
+        for (&board) |*num| {
             num.* = try std.fmt.parseInt(u8, board_nums.next().?, 10);
         }
         try bingo_boards.append(board);
@@ -35,16 +35,17 @@ pub noinline fn run(input: aoc.Input) !aoc.Output {
 
     var boards_finished: u32 = 0;
     stop_bingo: for (bingo_nums.items) |bingo_num| {
-        for (bingo_boards.items) |board, board_i| {
+        for (bingo_boards.items, 0..) |board, board_i| {
             if (board_finished.items[board_i]) continue;
 
-            for (board) |board_num, num_i| {
+            for (board, 0..) |board_num, num_i| {
                 if (board_num == bingo_num) {
                     board_totals.items[board_i] += bingo_num;
-                    board_tallys.items[board_i][    num_i / 5] += 1;
+                    board_tallys.items[board_i][num_i / 5] += 1;
                     board_tallys.items[board_i][5 + num_i % 5] += 1;
-                    if (board_tallys.items[board_i][    num_i / 5] == 5 or
-                        board_tallys.items[board_i][5 + num_i % 5] == 5) {
+                    if (board_tallys.items[board_i][num_i / 5] == 5 or
+                        board_tallys.items[board_i][5 + num_i % 5] == 5)
+                    {
                         // BINGOOOO !!!!!! DOOR VOOR DE BROODROOSTER BEP
                         boards_finished += 1;
                         board_finished.items[board_i] = true;
@@ -60,7 +61,7 @@ pub noinline fn run(input: aoc.Input) !aoc.Output {
             }
         }
     }
-    return aoc.Output{.part1 = part1, .part2 = part2};
+    return aoc.Output{ .part1 = part1, .part2 = part2 };
 }
 
 inline fn calculateBoardSum(board: [25]u8, board_total: u32) u32 {

@@ -25,11 +25,9 @@ pub fn run(input: aoc.Input) !aoc.Output {
     var grid = aoc.field(1000, 1000, false);
 
     var lines = aoc.tokenize(input, "\n");
-    while (lines.next()) |line| {
-        
-    }
+    while (lines.next()) |line| {}
 
-    return aoc.Output{.part1 = part1, .part2 = part2};
+    return aoc.Output{ .part1 = part1, .part2 = part2 };
 }
 
 test "2015-6" {

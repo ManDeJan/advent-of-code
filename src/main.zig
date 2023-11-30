@@ -13,7 +13,7 @@ pub fn main() !void {
     const arg_list = try std.process.argsAlloc(aoc.allocator);
     defer std.process.argsFree(aoc.allocator, arg_list);
 
-    for (arg_list) |arg, i| {
+    for (arg_list, 0..) |arg, i| {
         if (std.mem.eql(u8, arg, "-h")) {
             std.debug.print("Usage: -y <year> -d <day> -w <warmup-count> -b <benchmark-count>\n", .{});
         }
@@ -36,7 +36,7 @@ pub fn main() !void {
 
     var total_ns: u64 = 0;
 
-    for (solutions) |solution_year, i| {
+    for (solutions, 0..) |solution_year, i| {
         if (arg_year) |year| {
             if (!std.mem.eql(u8, year, solution_year.year)) {
                 continue;
@@ -46,7 +46,7 @@ pub fn main() !void {
         var year_ns: u64 = 0;
         if (i != 0) aoc.print("\n", .{});
         aoc.print("\x1B[1;4mYear {s}\x1B[0m\n", .{solution_year.year});
-        for (solution_year.days) |solution_day, day_idx| {
+        for (solution_year.days, 0..) |solution_day, day_idx| {
             if (arg_day) |day| {
                 if (!std.mem.eql(u8, day, solution_day)) {
                     continue;
@@ -95,8 +95,8 @@ pub fn main() !void {
                 solution_day,
                 timefmt,
                 symbol,
-                @ptrCast([*:0]u8, &result_text_1),
-                @ptrCast([*:0]u8, &result_text_2),
+                @as([*:0]u8, @ptrCast(&result_text_1)),
+                @as([*:0]u8, @ptrCast(&result_text_2)),
             });
         }
         total_ns += year_ns;

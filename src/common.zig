@@ -26,8 +26,14 @@ pub const arena_allocator = arena.allocator();
 
 pub const allocator = arena_allocator;
 
+pub const native = @import("builtin").cpu.arch.endian();
+
 pub fn tokenize(buffer: []const u8, delimiter_bytes: []const u8) @TypeOf(mem.tokenize(u8, " ", " ")) {
     return mem.tokenize(u8, buffer, delimiter_bytes);
+}
+
+pub fn tokenizeScalar(buffer: []const u8, delimiter: u8) @TypeOf(mem.tokenizeScalar(u8, " ", ' ')) {
+    return mem.tokenizeScalar(u8, buffer, delimiter);
 }
 
 pub fn split(buffer: []const u8, delimiter: []const u8) @TypeOf(mem.split(u8, " ", " ")) {
@@ -56,9 +62,11 @@ pub fn inputAsInts(comptime T: type, input: Input, comptime radix: anytype) !Arr
     return nums;
 }
 
-pub fn range(comptime size: comptime_int) [size]void {
-    return [_]void{{}} ** size; // hide the jank B)
-}
+// pub fn range(comptime size: comptime_int) [size]void {
+//     return [_]void{{}} ** size; // hide the jank B)
+// }
+
+pub const assert = std.debug.assert;
 
 pub fn field(
     comptime dim_x: comptime_int,
@@ -71,7 +79,7 @@ pub fn field(
 // Trust me bro
 pub fn ocr_6x5_once(comptime fill: u8, comptime none: u8, rows: [6][]const u8) u8 {
     const bits: [6]u8 = .{ rows[0][0], rows[0][3], rows[2][1], rows[2][3], rows[5][1], rows[5][3] };
-    for (bits) |bit| std.debug.assert(bit == fill or bit == none);
+    for (bits) |bit| assert(bit == fill or bit == none);
     if (bits[0] == fill) {
         if (bits[1] == fill) {
             if (bits[2] == fill) {

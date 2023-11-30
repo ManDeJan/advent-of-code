@@ -4,10 +4,11 @@ const aoc = @import("common.zig");
 pub fn run(input: aoc.Input, part2: []u8) !aoc.OutputPart1 {
     var part1: i64 = 0;
     var cpu = try SimpleCPU.initMemory(aoc.allocator, input);
+    defer cpu.deinit();
 
     cpu.nCycles(19);
     part1 += cpu.signalStrength();
-    for (aoc.range(5)) |_| {
+    for (0..5) |_| {
         cpu.nCycles(40);
         part1 += cpu.signalStrength();
     }
@@ -122,7 +123,7 @@ const SimpleCPU = struct {
     }
 
     pub fn nCycles(self: *Self, comptime count: comptime_int) void {
-        inline for (aoc.range(count)) |_| {
+        inline for (0..count) |_| {
             self.oneCycle();
         }
     }

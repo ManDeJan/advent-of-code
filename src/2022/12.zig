@@ -5,15 +5,19 @@ pub fn run(input: aoc.Input) !aoc.Output {
     var map: MapType align(8) = aoc.field(MapWidth, MapHeight, @as(u8, 0));
 
     var lines = aoc.split(input, "\n");
-    {var i: usize = 0; while (lines.next()) |line| : (i += 1) {
-            std.mem.copy(u8, map[i + 1][1..], line);
-    }}
+    {
+        var i: usize = 0;
+        while (lines.next()) |line| : (i += 1) {
+            aoc.assert(line.len < MapWidth);
+            @memcpy(map[i + 1][1 .. line.len + 1], line);
+        }
+    }
 
     var start: ?Point = null;
     var end: ?Point = null;
-    outer: for (map) |row, y| for (row) |point, x| {
-        if (point == 'S') start = Point{ .x = @truncate(u8, x), .y = @truncate(u8, y) };
-        if (point == 'E') end = Point{ .x = @truncate(u8, x), .y = @truncate(u8, y) };
+    outer: for (map, 0..) |row, y| for (row, 0..) |point, x| {
+        if (point == 'S') start = Point{ .x = @truncate(x), .y = @truncate(y) };
+        if (point == 'E') end = Point{ .x = @truncate(x), .y = @truncate(y) };
         if (start != null and end != null) break :outer;
     };
     map[start.?.y][start.?.x] = 'a';

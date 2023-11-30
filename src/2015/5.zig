@@ -18,36 +18,37 @@ pub fn run(input: aoc.Input) !aoc.Output {
 
 fn isVowel(char: u8) bool {
     return char == 'a' or
-           char == 'e' or
-           char == 'i' or
-           char == 'o' or
-           char == 'u';
+        char == 'e' or
+        char == 'i' or
+        char == 'o' or
+        char == 'u';
 }
 
 fn isNice1(line: []const u8) bool {
     var vowel_count: u8 = 0;
     var double_letter = false;
-    for (line[0..line.len - 1]) |char, i| {
-        const last2 = std.mem.readIntSliceNative(u16, line[i..]);
-        if (last2 == std.mem.readIntSliceNative(u16, "ab") or
-            last2 == std.mem.readIntSliceNative(u16, "cd") or
-            last2 == std.mem.readIntSliceNative(u16, "pq") or
-            last2 == std.mem.readIntSliceNative(u16, "xy")) return false;
+    for (line[0 .. line.len - 1], 0..) |char, i| {
+        const last2 = std.mem.readPackedIntNative(u16, line[i..], 0);
+        if (last2 == std.mem.readInt(u16, "ab", aoc.native) or
+            last2 == std.mem.readInt(u16, "cd", aoc.native) or
+            last2 == std.mem.readInt(u16, "pq", aoc.native) or
+            last2 == std.mem.readInt(u16, "xy", aoc.native)) return false;
 
         if (isVowel(char)) vowel_count += 1;
         if (char == line[i + 1]) double_letter = true;
     }
-    if (isVowel(line[line.len-1])) vowel_count += 1;
+    if (isVowel(line[line.len - 1])) vowel_count += 1;
     return vowel_count >= 3 and double_letter;
 }
 
 fn isNice2(line: []const u8) bool {
     var double_pair = false;
     var triple_letter = false;
-    for (line[0..line.len - 2]) |_, i| {
-        if (line[i] == line[i+2]) triple_letter = true;
-        for (line[i+2..line.len - 1]) |_, j| {
-            if (std.mem.readIntSliceNative(u16, line[i..]) == std.mem.readIntSliceNative(u16, line[i+j+2..])) double_pair = true;
+    for (line[0 .. line.len - 2], 0..) |_, i| {
+        if (line[i] == line[i + 2]) triple_letter = true;
+        for (line[i + 2 .. line.len - 1], 0..) |_, j| {
+            if (std.mem.readPackedIntNative(u16, line[i..], 0) ==
+                std.mem.readPackedIntNative(u16, line[i + j + 2 ..], 0)) double_pair = true;
         }
     }
     return double_pair and triple_letter;
@@ -65,5 +66,4 @@ test "2015-5" {
     try aoc.testEqual(true, isNice2("xxyxx"));
     try aoc.testEqual(false, isNice2("uurcxstgmygtbstg"));
     try aoc.testEqual(false, isNice2("ieodomkazucvgmuy"));
-
 }

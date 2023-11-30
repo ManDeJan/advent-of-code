@@ -9,7 +9,7 @@ pub fn run(input: aoc.Input) !aoc.Output {
     while (lines.next()) |line| {
         var dims_s = aoc.tokenize(line, "x");
         var dims: [3]u8 = undefined;
-        inline for (aoc.range(3)) |_, i| {
+        inline for (0..3) |i| {
             dims[i] = try std.fmt.parseInt(u5, dims_s.next().?, 10);
         }
         partialSort3Numbers(&dims); // slightly faster then std.sort.sort
@@ -17,7 +17,7 @@ pub fn run(input: aoc.Input) !aoc.Output {
         part2 += 2 * @as(u16, (dims[0] + dims[1])) + @as(u16, dims[0]) * dims[1] * dims[2];
     }
 
-    return aoc.Output{.part1 = part1, .part2 = part2};
+    return aoc.Output{ .part1 = part1, .part2 = part2 };
 }
 
 fn partialSort3Numbers(dims: *[3]u8) void {

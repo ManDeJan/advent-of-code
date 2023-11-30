@@ -28,9 +28,16 @@ pub fn run(input: aoc.Input) !aoc.Output {
 }
 
 inline fn insertInTop3(top1: *u32, top2: *u32, top3: *u32, new: u32) void {
-         if (new > top1.*) { top3.* = top2.*; top2.* = top1.*; top1.* = new; }
-    else if (new > top2.*) { top3.* = top2.*; top2.* = new; }
-    else if (new > top3.*) { top3.* = new; }
+    if (new > top1.*) {
+        top3.* = top2.*;
+        top2.* = top1.*;
+        top1.* = new;
+    } else if (new > top2.*) {
+        top3.* = top2.*;
+        top2.* = new;
+    } else if (new > top3.*) {
+        top3.* = new;
+    }
 }
 
 test "2022-1" {
