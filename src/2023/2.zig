@@ -8,7 +8,7 @@ pub fn run(input: aoc.Input) !aoc.Output {
     var games = aoc.splitLines(input);
     while (games.next()) |game| {
         var results = aoc.tokenizeAny(game[5..], " :;,");
-        var game_num = try std.fmt.parseInt(u32, results.next().?, 10);
+        const game_num = try std.fmt.parseInt(u32, results.next().?, 10);
         var red: u32 = 0;
         var green: u32 = 0;
         var blue: u32 = 0;
