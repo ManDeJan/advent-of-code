@@ -29,7 +29,7 @@ pub fn run(input: aoc.Input) !aoc.Output {
     return aoc.Output{ .part1 = part1, .part2 = part2 };
 }
 
-test "2023-1" {
+test "2023-2" {
     try aoc.testPart1(8, run(
         \\Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
         \\Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue
