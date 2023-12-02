@@ -36,6 +36,10 @@ pub fn tokenizeScalar(buffer: []const u8, delimiter: u8) @TypeOf(mem.tokenizeSca
     return mem.tokenizeScalar(u8, buffer, delimiter);
 }
 
+pub fn splitLines(buffer: []const u8) @TypeOf(mem.tokenizeScalar(u8, " ", '\n')) {
+    return mem.tokenizeScalar(u8, buffer, '\n');
+}
+
 pub fn split(buffer: []const u8, delimiter: []const u8) @TypeOf(mem.split(u8, " ", " ")) {
     return mem.split(u8, buffer, delimiter);
 }
