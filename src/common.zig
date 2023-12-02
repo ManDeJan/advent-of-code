@@ -32,6 +32,10 @@ pub fn tokenize(buffer: []const u8, delimiter_bytes: []const u8) @TypeOf(mem.tok
     return mem.tokenize(u8, buffer, delimiter_bytes);
 }
 
+pub fn tokenizeAny(buffer: []const u8, delimiter_bytes: []const u8) @TypeOf(mem.tokenizeAny(u8, " ", " ")) {
+    return mem.tokenizeAny(u8, buffer, delimiter_bytes);
+}
+
 pub fn tokenizeScalar(buffer: []const u8, delimiter: u8) @TypeOf(mem.tokenizeScalar(u8, " ", ' ')) {
     return mem.tokenizeScalar(u8, buffer, delimiter);
 }
