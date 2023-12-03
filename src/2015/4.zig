@@ -1,7 +1,7 @@
 const std = @import("std");
 const aoc = @import("common.zig");
-// const md5 = @import("md5.zig");
-const Md5 = std.crypto.hash.Md5;
+const Md5 = @import("md5.zig").Md5;
+// const Md5 = std.crypto.hash.Md5;
 
 pub fn run(input: aoc.Input) !aoc.Output {
     var part1: i64 = 0;
