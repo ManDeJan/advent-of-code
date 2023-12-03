@@ -82,9 +82,9 @@ pub fn run(input: aoc.Input) !aoc.Output {
 
 fn findIntFromIndex(input: []const u8, index: usize) u32 {
     var i = index;
-    while (isDigit(input[i - 1])) i -= 1;
+    while (i > 0 and isDigit(input[i - 1])) i -= 1;
     var j = index;
-    while (isDigit(input[j])) j += 1;
+    while (j < input.len and isDigit(input[j])) j += 1;
     return std.fmt.parseInt(u32, input[i..j], 10) catch unreachable;
 }
 
