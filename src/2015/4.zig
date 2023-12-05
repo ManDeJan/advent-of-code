@@ -11,7 +11,7 @@ pub fn run(input: aoc.Input) !aoc.Output {
     var part2found: bool = false;
 
     var input_hash = Md5.init(.{});
-    input_hash.update(input);
+    input_hash.update(input[0..if (input[input.len-1] == '\n') input.len - 1 else input.len]);
     while (true) {
         var buf align(16) = [_]u8{undefined} ** 8;
         var out align(16) = [_]u8{undefined} ** 16;
@@ -37,6 +37,6 @@ pub fn run(input: aoc.Input) !aoc.Output {
 
 test "2015-4" {
     // currently disabled because they're so slow
-    try aoc.testPart1(609043, run("abcdef"));
+    try aoc.testPart1(609043, run("abcdef\n"));
     try aoc.testPart1(1048970, run("pqrstuv"));
 }
