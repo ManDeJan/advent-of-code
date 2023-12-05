@@ -69,6 +69,12 @@ fn scratchCards(
         };
 
         var matching: u32 = 0;
+        // const scratch_vec: @Vector(scratch_n, u16) = scratch_nums;
+        // for (lucky_nums) |l| {
+        //     const lucky_vec: @Vector(scratch_n, u16) = @splat(l);
+        //     matching += @intFromBool(@reduce(.Or, scratch_vec == lucky_vec));
+        // }
+
         for (lucky_nums) |l| {
             inline for (scratch_nums) |s| {
                 if (l == s) matching += 1;
