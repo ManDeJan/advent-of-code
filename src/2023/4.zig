@@ -60,7 +60,6 @@ fn scratchCards(
             }
             break :blk lucky_nums;
         };
-        _ = lucky_nums;
         const scratch_nums = blk: {
             var scratch_nums: [scratch_n]u16 = undefined;
             inline for (0..scratch_n) |n| {
@@ -68,7 +67,6 @@ fn scratchCards(
             }
             break :blk scratch_nums;
         };
-        _ = scratch_nums;
 
         const matching: u32 = 0;
         // const scratch_vec: @Vector(scratch_n, u16) = scratch_nums;
@@ -83,11 +81,11 @@ fn scratchCards(
         //     matching += @intFromBool(@reduce(.Or, scratch_vec == lucky_vec));
         // }
 
-        // for (lucky_nums) |l| {
-        //     inline for (scratch_nums) |s| {
-        //         if (l == s) matching += 1;
-        //     }
-        // }
+        for (lucky_nums) |l| {
+            inline for (scratch_nums) |s| {
+                if (l == s) matching += 1;
+            }
+        }
 
         part1 += if (matching > 0) std.math.pow(i64, 2, matching - 1) else 0;
         for (i / length..matching + i / length) |j|
