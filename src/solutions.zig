@@ -107,6 +107,7 @@ pub const solutions = [_]SolutionYear{
             "4",
             // "5",
             "6",
+            "7",
         },
         .funcs = &.{
             getSolution(@import("2023/1.zig")),
@@ -115,7 +116,7 @@ pub const solutions = [_]SolutionYear{
             getSolution(@import("2023/4.zig")),
             // getSolution(@import("2023/5.zig")),
             getSolution(@import("2023/6.zig")),
-            // getSolution(@import("2023/7.zig")),
+            getSolution(@import("2023/7.zig")),
             // getSolution(@import("2023/9.zig")),
             // getSolution(@import("2023/10.zig")),
             // getSolution(@import("2023/11.zig")),
