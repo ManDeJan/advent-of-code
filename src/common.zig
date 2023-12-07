@@ -45,11 +45,17 @@ pub fn splitLines(buffer: []const u8) @TypeOf(mem.tokenizeScalar(u8, " ", '\n'))
 }
 
 pub fn split(buffer: []const u8, delimiter: []const u8) @TypeOf(mem.split(u8, " ", " ")) {
-    return mem.split(u8, buffer, delimiter);
+    return mem.splitSequence(u8, buffer, delimiter);
 }
 
 pub fn newVec(comptime typeOf: type) @TypeOf(ArrayList(typeOf).init(allocator)) {
     return std.ArrayList(typeOf).init(allocator);
+}
+
+pub fn newVecCap(comptime typeOf: type, comptime capacity: usize) !@TypeOf(ArrayList(typeOf).init(allocator)) {
+    var vec = std.ArrayList(typeOf).init(allocator);
+    try vec.ensureTotalCapacity(capacity);
+    return vec;
 }
 
 pub fn print(comptime format: []const u8, args: anytype) void {
@@ -68,6 +74,10 @@ pub fn inputAsInts(comptime T: type, input: Input, comptime radix: anytype) !Arr
         try nums.append(try std.fmt.parseInt(T, line, radix));
     }
     return nums;
+}
+
+pub fn parseInt(comptime T: type, input: []const u8) !T {
+    return std.fmt.parseInt(T, input, 10);
 }
 
 // pub fn range(comptime size: comptime_int) [size]void {

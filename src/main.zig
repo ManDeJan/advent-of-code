@@ -45,7 +45,10 @@ pub fn main() !void {
 
         var year_ns: u64 = 0;
         if (i != 0) aoc.print("\n", .{});
-        aoc.print("\x1B[1;4mYear {s}\x1B[0m\n", .{solution_year.year});
+        aoc.print("\n┌─────────┐\n", .{});
+        aoc.print("│\x1B[1mYear {s}\x1B[0m│\n", .{solution_year.year});
+        aoc.print("├───┬─────┴─────────┬───────────────┬──────────────┐\n", .{});
+        aoc.print("│\x1B[1mDay\x1B[0m│\x1B[1m{s: ^15}\x1B[0m│\x1B[1m{s: ^15}\x1B[0m│\x1B[1m{s: ^14}\x1B[0m│\n", .{"Part 1", "Part 2", "Time"});
         for (solution_year.days, 0..) |solution_day, day_idx| {
             if (arg_day) |day| {
                 if (!std.mem.eql(u8, day, solution_day)) {
@@ -55,7 +58,7 @@ pub fn main() !void {
             const input_filename = aoc.printToString("inputs/{s}/{s}.txt", .{ solution_year.year, solution_day });
             const func_type = solution_year.funcs[day_idx];
 
-            const input = try std.fs.cwd().readFileAlloc(aoc.allocator, input_filename, 1024 * 1024);
+            const input align(1 << 21) = try std.fs.cwd().readFileAlloc(aoc.allocator, input_filename, 1024 * 1024);
 
             var result: aoc.Output = undefined;
             var result_text_1 = std.mem.zeroes([15:0]u8);
@@ -85,25 +88,20 @@ pub fn main() !void {
                 },
                 else => {},
             }
-            var timefmt = time / std.time.ns_per_us;
-            var symbol: []const u8 = "μ";
-            if (false and timefmt <= 1) {
-                timefmt = time;
-                symbol = "n";
-            }
-            aoc.print("Day {s:2} in {:7} {s}s Part 1: {s: >15} Part 2: {s: >15}\n", .{
+            aoc.print("│{s:>3}│{s: >15}│{s: >15}│{d:>11.3} μs│\n", .{
                 solution_day,
-                timefmt,
-                symbol,
                 @as([*:0]u8, @ptrCast(&result_text_1)),
                 @as([*:0]u8, @ptrCast(&result_text_2)),
+                @as(f64, @floatFromInt(time)) / std.time.ns_per_us,
             });
         }
+        
+        aoc.print("└───┴───────────────┴─────┬─────────┼─────────── + ┤\n", .{});
         total_ns += year_ns;
-        aoc.print("Year time:\x1B[1m {:6} μs\x1B[0m\n", .{year_ns / std.time.ns_per_us});
+        aoc.print("                          │\x1B[1mYear time│{d:>11.3} μs\x1B[0m│\n", .{@as(f64, @floatFromInt(year_ns)) / std.time.ns_per_us});
+        aoc.print("                          └─────────┴──────────────┘\n", .{});
     }
-    aoc.print("--------------------\n", .{});
-    aoc.print("Total time:\x1B[1m {:5} μs\x1B[0m\n", .{total_ns / std.time.ns_per_us});
+    aoc.print("Total time:\x1B[1m {d:.3} μs\x1B[0m\n", .{@as(f64, @floatFromInt(total_ns)) / std.time.ns_per_us});
 }
 
 test {
