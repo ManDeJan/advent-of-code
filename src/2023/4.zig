@@ -2,10 +2,6 @@ const std = @import("std");
 const aoc = @import("common.zig");
 
 pub fn run(input: aoc.Input) !aoc.Output {
-    const part1: i64 = 0;
-    _ = part1;
-    const part2: i64 = 0;
-    _ = part2;
     const params = ScratchCardParams.fromInput(input);
     const test_params = comptime ScratchCardParams.fromInput("Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53\n");
     const real_params = comptime ScratchCardParams.fromInput("Card   1: 44 22 11 15 37 50  3 90 60 34 | 35 60 76  3 21 84 45 52 15 72 13 31 90  6 37 44 34 53 68 22 50 38 67 11 55\n");
@@ -69,17 +65,23 @@ fn scratchCards(
         };
 
         var matching: u32 = 0;
-        // const scratch_vec: @Vector(scratch_n, u16) = scratch_nums;
-        // for (lucky_nums) |l| {
-        //     const lucky_vec: @Vector(scratch_n, u16) = @splat(l);
+        const scratch_vec: @Vector(scratch_n, u16) = scratch_nums;
+        for (lucky_nums) |l| {
+            const lucky_vec: @Vector(scratch_n, u16) = @splat(l);
+            matching += @intFromBool(@reduce(.Or, scratch_vec == lucky_vec));
+        }
+
+        // const lucky_vec: @Vector(lucky_n, u16) = lucky_nums;
+        // for (scratch_nums) |l| {
+        //     const scratch_vec: @Vector(lucky_n, u16) = @splat(l);
         //     matching += @intFromBool(@reduce(.Or, scratch_vec == lucky_vec));
         // }
 
-        for (lucky_nums) |l| {
-            inline for (scratch_nums) |s| {
-                if (l == s) matching += 1;
-            }
-        }
+        // for (lucky_nums) |l| {
+        //     inline for (scratch_nums) |s| {
+        //         if (l == s) matching += 1;
+        //     }
+        // }
 
         part1 += if (matching > 0) std.math.pow(i64, 2, matching - 1) else 0;
         for (i / length..matching + i / length) |j|
