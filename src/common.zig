@@ -21,20 +21,18 @@ const ArrayList = std.ArrayList;
 var gpa = std.heap.GeneralPurposeAllocator(.{}){};
 pub const gpa_allocator = &gpa.allocator;
 pub const heap_allocator = std.heap.page_allocator;
-var arena = std.heap.ArenaAllocator.init(heap_allocator);
+pub var arena = std.heap.ArenaAllocator.init(heap_allocator);
 pub const arena_allocator = arena.allocator();
 
 pub const allocator = arena_allocator;
 
 pub const native = @import("builtin").cpu.arch.endian();
 
-pub fn tokenize(buffer: []const u8, delimiter_bytes: []const u8) @TypeOf(mem.tokenize(u8, " ", " ")) {
-    return mem.tokenize(u8, buffer, delimiter_bytes);
-}
-
 pub fn tokenizeAny(buffer: []const u8, delimiter_bytes: []const u8) @TypeOf(mem.tokenizeAny(u8, " ", " ")) {
     return mem.tokenizeAny(u8, buffer, delimiter_bytes);
 }
+
+pub const tokenize = tokenizeAny;
 
 pub fn tokenizeScalar(buffer: []const u8, delimiter: u8) @TypeOf(mem.tokenizeScalar(u8, " ", ' ')) {
     return mem.tokenizeScalar(u8, buffer, delimiter);
@@ -44,8 +42,12 @@ pub fn splitLines(buffer: []const u8) @TypeOf(mem.tokenizeScalar(u8, " ", '\n'))
     return mem.tokenizeScalar(u8, buffer, '\n');
 }
 
-pub fn split(buffer: []const u8, delimiter: []const u8) @TypeOf(mem.split(u8, " ", " ")) {
+pub fn split(buffer: []const u8, delimiter: []const u8) @TypeOf(mem.splitSequence(u8, " ", " ")) {
     return mem.splitSequence(u8, buffer, delimiter);
+}
+
+pub fn splitScalar(buffer: []const u8, delimiter: u8) @TypeOf(mem.splitScalar(u8, " ", ' ')) {
+    return mem.splitScalar(u8, buffer, delimiter);
 }
 
 pub fn newVec(comptime typeOf: type) @TypeOf(ArrayList(typeOf).init(allocator)) {
@@ -53,9 +55,7 @@ pub fn newVec(comptime typeOf: type) @TypeOf(ArrayList(typeOf).init(allocator)) 
 }
 
 pub fn newVecCap(comptime typeOf: type, comptime capacity: usize) !@TypeOf(ArrayList(typeOf).init(allocator)) {
-    var vec = std.ArrayList(typeOf).init(allocator);
-    try vec.ensureTotalCapacity(capacity);
-    return vec;
+    return std.ArrayList(typeOf).initCapacity(allocator, capacity);
 }
 
 pub fn print(comptime format: []const u8, args: anytype) void {
@@ -76,9 +76,13 @@ pub fn inputAsInts(comptime T: type, input: Input, comptime radix: anytype) !Arr
     return nums;
 }
 
+pub const window = std.mem.window;
+
 pub fn parseInt(comptime T: type, input: []const u8) !T {
     return std.fmt.parseInt(T, input, 10);
 }
+
+pub const sort = std.sort.pdq;
 
 // pub fn range(comptime size: comptime_int) [size]void {
 //     return [_]void{{}} ** size; // hide the jank B)

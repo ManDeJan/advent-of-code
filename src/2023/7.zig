@@ -7,7 +7,9 @@ pub fn run(input: aoc.Input) !aoc.Output {
 
     var lines = aoc.splitLines(input);
     var hands1 = try aoc.newVecCap(u64, 1000);
+    defer hands1.deinit();
     var hands2 = try aoc.newVecCap(u64, 1000);
+    defer hands2.deinit();
     while (lines.next()) |line| {
         const value = try aoc.parseInt(u32, line["AAAAA ".len..]);
         const cards = [_]u8{ cardValue(line[0]), cardValue(line[1]), cardValue(line[2]), cardValue(line[3]), cardValue(line[4]) };
@@ -75,13 +77,23 @@ fn handType(cards: [5]u8) [2]u8 {
         card_counts[diff_cards_seen] += 1;
         diff_cards_seen += 1;
     }
-    if (card_counts[0] == 5) return .{ 6, 6 }; // five of a kind
-    if (card_counts[0] == 4 or card_counts[1] == 4) return if (j_count != 0) .{ 5, 6 } else .{ 5, 5 }; // four of a kind
-    if (card_counts[2] == 0 and (card_counts[0] == 3 or card_counts[1] == 3)) return if (j_count != 0) .{ 4, 6 } else .{ 4, 4 }; // full house
-    if (card_counts[0] == 3 or card_counts[1] == 3 or card_counts[2] == 3) return if (j_count != 0) .{ 3, 5 } else .{ 3, 3 }; // three of a kind
-    if (card_counts[3] == 0) return if (j_count == 1) .{ 2, 4 } else if (j_count == 2) .{ 2, 5 } else .{ 2, 2 }; // two pair
-    if (card_counts[4] == 0) return if (j_count != 0) .{ 1, 3 } else .{ 1, 1 }; // one pair
-    return .{ 0, j_count }; // high card
+
+    // inline for (card_counts) |c| aoc.assert(c >= 0 and c <= 5);
+    if (card_counts[4] != 0) return .{ 0, j_count }; // high card
+    if (card_counts[3] != 0) return if (j_count != 0) .{ 1, 3 } else .{ 1, 1 }; // one pair
+    if (card_counts[2] != 0 and (card_counts[0] == 2 or card_counts[1] == 2)) return if (j_count == 1) .{ 2, 4 } else if (j_count == 2) .{ 2, 5 } else .{ 2, 2 }; // two pair
+    if (card_counts[2] != 0) return if (j_count != 0) .{ 3, 5 } else .{ 3, 3 }; // three of a kind
+    if (card_counts[1] == 2 or card_counts[1] == 3) return if (j_count != 0) .{ 4, 6 } else .{ 4, 4 }; // full house
+    if (card_counts[1] != 0) return if (j_count != 0) .{ 5, 6 } else .{ 5, 5 }; // four of a kind
+    return .{ 6, 6 }; // five of a kind
+
+    // if (card_counts[1] == 0) return .{ 6, 6 }; // five of a kind
+    // if (card_counts[0] == 4 or card_counts[1] == 4) return if (j_count != 0) .{ 5, 6 } else .{ 5, 5 }; // four of a kind
+    // if (card_counts[2] == 0 and (card_counts[0] == 3 or card_counts[1] == 3)) return if (j_count != 0) .{ 4, 6 } else .{ 4, 4 }; // full house
+    // if (card_counts[0] == 3 or card_counts[1] == 3 or card_counts[2] == 3) return if (j_count != 0) .{ 3, 5 } else .{ 3, 3 }; // three of a kind
+    // if (card_counts[3] == 0) return if (j_count == 1) .{ 2, 4 } else if (j_count == 2) .{ 2, 5 } else .{ 2, 2 }; // two pair
+    // if (card_counts[4] == 0) return if (j_count != 0) .{ 1, 3 } else .{ 1, 1 }; // one pair
+    // return .{ 0, j_count }; // high card
 }
 
 test "2023-7" {

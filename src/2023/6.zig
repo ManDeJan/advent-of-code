@@ -6,7 +6,9 @@ pub fn run(input: aoc.Input) !aoc.Output {
     var timing_line = aoc.tokenizeScalar(lines.next().?["Distance:".len..], ' ');
     var distance_line = aoc.tokenizeScalar(lines.next().?["Distance:".len..], ' ');
     var timings = aoc.newVec(u64);
+    defer timings.deinit();
     var distances = aoc.newVec(u64);
+    defer distances.deinit();
     var kerned_time: u64 = 0;
     var kerned_distance: u64 = 0;
     while (timing_line.next()) |timing| {

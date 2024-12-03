@@ -4,11 +4,11 @@ const aoc = @import("common.zig");
 pub fn run(input: aoc.Input, part1: []u8, part2: []u8) !void {
     var input_sections = aoc.split(input, "\n\n");
     const header = input_sections.next().?;
-    var header_sections = std.mem.splitBackwards(u8, header, "\n");
+    var header_sections = std.mem.splitBackwardsScalar(u8, header, '\n');
     var instructions = aoc.tokenize(input_sections.rest(), "\n");
 
     const stack_count = blk: {
-        var stack_line = std.mem.splitBackwards(u8, header_sections.next().?[0..], " ");
+        var stack_line = std.mem.splitBackwardsScalar(u8, header_sections.next().?[0..], ' ');
         while (stack_line.next()) |stack_line_seg| {
             if (stack_line_seg.len == 0) continue;
             break :blk try std.fmt.parseUnsigned(u8, stack_line_seg, 10);

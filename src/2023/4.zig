@@ -42,7 +42,8 @@ fn scratchCards(
     const lucky_n = (scratch_start - lucky_start) / 3;
     const scratch_n = (length - scratch_start) / 3;
 
-    var card_counts = aoc.newVec(u32);
+    var card_counts = try aoc.newVecCap(u32, 190);
+    defer card_counts.deinit();
     try card_counts.appendNTimes(1, input.len / length);
 
     var part1: i64 = 0;
