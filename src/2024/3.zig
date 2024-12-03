@@ -4,11 +4,12 @@ const aoc = @import("common.zig");
 const Pair = [2]u32;
 
 fn findEnd(haystack: []const u8) ?usize {
+    aoc.assert(haystack.len == "000,000)".len);
     return std.mem.indexOfScalarPos(u8, haystack, 0, ')');
 }
 
 fn parsePair(pair: []const u8) !Pair {
-    aoc.assert(pair.len >= "0,0".len);
+    aoc.assert(pair.len >= "0,0".len); // these asserts help optimisation a lot (~ 20%)
     aoc.assert(pair.len <= "000,000".len);
     var idxcomma: ?usize = null;
     for (pair, 0..) |c, i| {
@@ -37,16 +38,15 @@ pub fn run(input: aoc.Input) !aoc.Output {
     var i: usize = 0;
     while (i < input.len - min_mul) {
         const rem = input[i..];
+        // aoc.print("{} {s}\n", .{ i, rem[0..max_mul] });
 
         if (std.mem.startsWith(u8, rem[0..], "do()")) {
             enable_mul = true;
-        }
-
-        if (std.mem.startsWith(u8, rem[0..], "don't()")) {
+            i += "do()".len;
+        } else if (std.mem.startsWith(u8, rem[0..], "don't()")) {
             enable_mul = false;
-        }
-
-        if (std.mem.startsWith(u8, rem[0..], "mul(")) {
+            i += "don't".len;
+        } else if (std.mem.startsWith(u8, rem[0..], "mul(")) {
             const start = "mul(".len;
             const end = findEnd(rem[start..max_mul]);
             if (end == null) {
@@ -57,9 +57,10 @@ pub fn run(input: aoc.Input) !aoc.Output {
             // aoc.print("{s} {any}\n", .{ rem[start .. start + end.?], pair });
             part1 += pair[0] * pair[1];
             if (enable_mul) part2 += pair[0] * pair[1];
-        }
-
-        i += 1;
+            i += start + end.?;
+        } else if (std.mem.indexOfAnyPos(u8, rem, 1, "dm")) |idx| {
+            i += idx;
+        } else break;
     }
 
     return aoc.Output{ .part1 = part1, .part2 = part2 };
