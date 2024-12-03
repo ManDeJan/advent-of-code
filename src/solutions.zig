@@ -1,7 +1,7 @@
 const aoc = @import("common.zig");
 
 fn getSolution(comptime import: anytype) aoc.SolutionFnType {
-    const params = @typeInfo(@TypeOf(import.run)).Fn.params;
+    const params = @typeInfo(@TypeOf(import.run)).@"fn".params;
     return switch (params.len) {
         1 => .{ .outputAsInt = import.run },
         2 => .{ .outputAsIntText = import.run },
@@ -98,30 +98,46 @@ pub const solutions = [_]SolutionYear{
     //         // getSolution(@import("2022/14.zig")),
     //     },
     // },
+    // .{
+    //     .year = "2023",
+    //     .days = &.{
+    //         "1",
+    //         "2",
+    //         "3",
+    //         "4",
+    //         // "5",
+    //         "6",
+    //         "7",
+    //         "8",
+    //         "9",
+    //     },
+    //     .funcs = &.{
+    //         getSolution(@import("2023/1.zig")),
+    //         getSolution(@import("2023/2.zig")),
+    //         getSolution(@import("2023/3.zig")),
+    //         getSolution(@import("2023/4.zig")),
+    //         // getSolution(@import("2023/5.zig")),
+    //         getSolution(@import("2023/6.zig")),
+    //         getSolution(@import("2023/7.zig")),
+    //         getSolution(@import("2023/8.zig")),
+    //         getSolution(@import("2023/9.zig")),
+    //         // getSolution(@import("2023/10.zig")),
+    //         // getSolution(@import("2023/11.zig")),
+    //         // getSolution(@import("2023/12.zig")),
+    //         // getSolution(@import("2023/14.zig")),
+    //     },
+    // },
     .{
-        .year = "2023",
+        .year = "2024",
         .days = &.{
             "1",
             "2",
             "3",
-            "4",
-            // "5",
-            "6",
-            "7",
         },
         .funcs = &.{
-            getSolution(@import("2023/1.zig")),
-            getSolution(@import("2023/2.zig")),
-            getSolution(@import("2023/3.zig")),
-            getSolution(@import("2023/4.zig")),
-            // getSolution(@import("2023/5.zig")),
-            getSolution(@import("2023/6.zig")),
-            getSolution(@import("2023/7.zig")),
-            // getSolution(@import("2023/9.zig")),
-            // getSolution(@import("2023/10.zig")),
-            // getSolution(@import("2023/11.zig")),
-            // getSolution(@import("2023/12.zig")),
-            // getSolution(@import("2023/14.zig")),
+            getSolution(@import("2024/1.zig")),
+            getSolution(@import("2024/2.zig")),
+            getSolution(@import("2024/3.zig")),
         },
     },
 };
